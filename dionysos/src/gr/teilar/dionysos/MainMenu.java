@@ -1,5 +1,7 @@
 package gr.teilar.dionysos;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ public class MainMenu extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_menu);
+		
+		
+		File myFile = new File("/sdcard/mysdfile.txt");
+		myFile.delete();
 
 		findViewById(R.id.preferences_button).setOnClickListener(
 				new OnClickListener() {
@@ -19,6 +25,15 @@ public class MainMenu extends Activity {
 						Intent i = new Intent(
 								getBaseContext(),
 								gr.teilar.dionysos.PreferencesScreen.class);
+						startActivity(i);
+					}
+				});
+		findViewById(R.id.rates_button).setOnClickListener(
+				new OnClickListener() {
+					public void onClick(View v) {
+						Intent i = new Intent(
+								getBaseContext(),
+								gr.teilar.dionysos.RatesScreen.class);
 						startActivity(i);
 					}
 				});

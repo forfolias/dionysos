@@ -12,4 +12,5 @@
     <string name="passwordDialogMessage">Παρακαλώ εισάγετε τον κωδικό σας</string>
     <string name="password">Κωδικός χρήστη</string>
     <string name="aboutApp">Περί της εφαρμογής</string>
+    <string name="dionysos_error">Ο server της υπηρεσίας dionysos δεν επέστρεψε τα αναμενόμενα αποτελέσματα.</string>
 </resources>
