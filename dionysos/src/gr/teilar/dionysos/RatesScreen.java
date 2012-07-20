@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Xml;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -51,83 +54,128 @@ public class RatesScreen extends Activity {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 
 		try {
-//            HttpGet httpget = new HttpGet("https://dionysos.teilar.gr/unistudent/login.asp");
-//
-//            HttpResponse ratesresponse = httpclient.execute(httpget);
-//
-//            HttpPost httpost = new HttpPost("https://dionysos.teilar.gr/unistudent/login.asp");
-//
-//            List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-//            nvps.add(new BasicNameValuePair("userName", "ouramaro"));
-//            nvps.add(new BasicNameValuePair("pwd", "koukouroukoukou"));
-//            nvps.add(new BasicNameValuePair("loginTrue", "login"));
-//
-//            httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-//
-//            ratesresponse = httpclient.execute(httpost);
-//            httpget = new HttpGet("https://dionysos.teilar.gr/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3");
-//            ratesresponse = httpclient.execute(httpget);
-//            String html = inputStreamToString(ratesresponse.getEntity().getContent()).toString();
-//            writeToFile(html);
-            String html = getHtmlFromFile();
-            String resp = "";
-			
-            Document doc = Jsoup.parse(html);
-			
+			// HttpGet httpget = new
+			// HttpGet("https://dionysos.teilar.gr/unistudent/login.asp");
+			//
+			// HttpResponse ratesresponse = httpclient.execute(httpget);
+			//
+			// HttpPost httpost = new
+			// HttpPost("https://dionysos.teilar.gr/unistudent/login.asp");
+			//
+			// List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+			// nvps.add(new BasicNameValuePair("userName", "ouramaro"));
+			// nvps.add(new BasicNameValuePair("pwd", "koukouroukoukou"));
+			// nvps.add(new BasicNameValuePair("loginTrue", "login"));
+			//
+			// httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+			//
+			// ratesresponse = httpclient.execute(httpost);
+			// httpget = new
+			// HttpGet("https://dionysos.teilar.gr/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3");
+			// ratesresponse = httpclient.execute(httpget);
+			// String html =
+			// inputStreamToString(ratesresponse.getEntity().getContent()).toString();
+			// writeToFile(html);
+			String html = getHtmlFromFile();
+			String resp = "";
+
+			Document doc = Jsoup.parse(html);
+
 			Elements gradestable = doc.select("table[cellpadding=4]");
 			Elements grades = gradestable.select("td[colspan=2]");
-			
-			
-			/* DEBUG */
-			
-				Log.d("DEBUG", grades.html());
-			
-			/* END DEBUG */
-			
+
+			Elements trs = grades.select("table > tbody > tr");
+			Elements tds;
+
+			int eksamino = 0;
+
+			XmlSerializer xmlSerializer = Xml.newSerializer();
+			StringWriter writer = new StringWriter();
+
+			xmlSerializer.setOutput(writer);
+			xmlSerializer.startDocument("UTF-8", true);
+			xmlSerializer.startTag("", "lessons");
+
+			for (Element tr : trs) {
+				if (tr.attr("height").equals("15")
+						|| tr.className().equals("italicHeader")
+						|| tr.className().equals("subHeaderBack"))
+					continue;
+				else {
+					tds = tr.select("td");
+
+					if (tds.size() == 1) {
+						eksamino++;
+					} else if (tds.size() == 8) {
+						xmlSerializer.startTag("", "lesson");
+						xmlSerializer.attribute("", "eksamino",
+								Integer.toString(eksamino));
+						xmlSerializer.attribute("", "ores", tds.get(4).text());
+						xmlSerializer.attribute("", "vathmos", tds.get(6)
+								.text());
+						xmlSerializer.text(tds.get(1).text().replaceAll("\\(.*?\\)  ",""));
+						xmlSerializer.endTag("", "lesson");
+					}
+				}
+			}
+
+			xmlSerializer.endTag("", "lessons");
+			xmlSerializer.endDocument();
+
+			writeToFile(writer.toString());
+
 			resp = grades.html();
-			
+
 			tv.loadDataWithBaseURL(null, resp, "text/html", "utf-8", null);
-            
-//        } catch (ClientProtocolException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
+
+			// } catch (ClientProtocolException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// } catch (IOException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
-            // When HttpClient instance is no longer needed,
-            // shut down the connection manager to ensure
-            // immediate deallocation of all system resources
-            httpclient.getConnectionManager().shutdown();
-        }
+			// When HttpClient instance is no longer needed,
+			// shut down the connection manager to ensure
+			// immediate deallocation of all system resources
+			httpclient.getConnectionManager().shutdown();
+		}
 	}
-	
+
 	private String getHtmlFromFile() {
 		File sdcard = Environment.getExternalStorageDirectory();
-		File file = new File(sdcard,"html.txt");
+		File file = new File(sdcard, "html.txt");
 		StringBuilder text = new StringBuilder();
 
 		try {
-		    BufferedReader br = new BufferedReader(new FileReader(file));
-		    String line;
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
 
-		    while ((line = br.readLine()) != null) {
-		        text.append(line);
-		        text.append('\n');
-		    }
+			while ((line = br.readLine()) != null) {
+				text.append(line);
+				text.append('\n');
+			}
+		} catch (IOException e) {
+			// You'll need to add proper error handling here
 		}
-		catch (IOException e) {
-		    //You'll need to add proper error handling here
-		}
-		
+
 		return text.toString();
-	
+
 	}
 
 	private void writeToFile(String resp) {
 		try {
 
-			File myFile = new File("/sdcard/mysdfile.txt");
+			File myFile = new File("/sdcard/dionysos.xml");
 			myFile.createNewFile();
 			FileOutputStream fOut = new FileOutputStream(myFile);
 			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);

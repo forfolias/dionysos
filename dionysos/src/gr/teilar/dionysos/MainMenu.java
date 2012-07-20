@@ -18,6 +18,8 @@ public class MainMenu extends Activity {
 		
 		File myFile = new File("/sdcard/mysdfile.txt");
 		myFile.delete();
+		myFile = new File("/sdcard/dionysos.xml");
+		myFile.delete();
 
 		findViewById(R.id.preferences_button).setOnClickListener(
 				new OnClickListener() {
