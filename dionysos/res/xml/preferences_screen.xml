@@ -10,6 +10,7 @@
 		<EditTextPreference
 			android:dialogMessage="@string/passwordDialogMessage"
 			android:dialogTitle="@string/password"
+			android:inputType="textPassword"
 			android:key="password"
 			android:title="@string/password" />
 	</PreferenceCategory>
