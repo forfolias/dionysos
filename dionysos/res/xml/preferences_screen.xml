@@ -15,6 +15,14 @@
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/aboutApp">
 		<Preference
+			android:key="updatePreference"
+			android:title="@string/update_data" />
+		<Preference
+			android:key="dataInformationPreference"
+			android:title="@string/data_information" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/aboutApp">
+		<Preference
 			android:key="aboutPreference"
 			android:title="@string/aboutApp" />
 	</PreferenceCategory>

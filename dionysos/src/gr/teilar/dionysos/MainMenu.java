@@ -5,6 +5,8 @@ import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -16,9 +18,7 @@ public class MainMenu extends Activity {
 		setContentView(R.layout.main_menu);
 		
 		
-		File myFile = new File("/sdcard/mysdfile.txt");
-		myFile.delete();
-		myFile = new File("/sdcard/dionysos.xml");
+		File myFile = new File("/sdcard/egrammatia/grades.xml");
 		myFile.delete();
 
 		findViewById(R.id.preferences_button).setOnClickListener(
@@ -35,9 +35,36 @@ public class MainMenu extends Activity {
 					public void onClick(View v) {
 						Intent i = new Intent(
 								getBaseContext(),
-								gr.teilar.dionysos.RatesScreen.class);
+								gr.teilar.dionysos.Dionysos.class);
 						startActivity(i);
 					}
 				});
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, 1, 0, R.string.downloading_data).setIcon(
+				R.drawable.ic_menu_save);
+		menu.add(0, 2, 0, R.string.preferences).setIcon(
+				R.drawable.ic_menu_preferences);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent i;
+		switch (item.getItemId()) {
+		case 1:
+			i = new Intent(
+					getBaseContext(),
+					gr.teilar.dionysos.Dionysos.class);
+			startActivity(i);
+			return true;
+		case 2:
+			i = new Intent(
+					getBaseContext(),
+					gr.teilar.dionysos.PreferencesScreen.class);
+			startActivity(i);
+			return true;
+		}
+		return false;
 	}
 }

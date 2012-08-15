@@ -13,4 +13,15 @@
     <string name="password">Κωδικός χρήστη</string>
     <string name="aboutApp">Περί της εφαρμογής</string>
     <string name="dionysos_error">Ο server της υπηρεσίας dionysos δεν επέστρεψε τα αναμενόμενα αποτελέσματα.</string>
+    <string name="missingUsername">Παρακαλώ συμπληρώστε το όνομα χρήστη στις ρυθμίσεις της εφαρμογής</string>
+    <string name="missingPassword">Παρακαλώ συμπληρώστε τον κωδικό του χρήστη στις ρυθμίσεις της εφαρμογής</string>
+    <string name="downloading_data">Κατέβασμα δεδομένων</string>
+    <string name="downloading_grades">Κατέβασμα μαθημάτων και βαθμολογιών</string>
+    <string name="writing_grades">Εγγραφή των μαθημάτων και βαθμολογιών στην sdcard</string>
+    <string name="connecting">Πραγματοποιείται η σύνδεση με την ηλεκτρονική Γραμματεία</string>
+    <string name="connection_error">Δεν υπάρχει διαθέσιμη σύνδεση δεδομένων. Παρακαλώ συνδεθείτε και ξαναπροσπαθήστε.</string>
+    <string name="download_success">Το κατέβασμα των δεδομένων ολοκληρώθηκε με επιτυχία.</string>
+    <string name="download_fail">Το κατέβασμα των δεδομένων δεν ολοκληρώθηκε επιτυχώς.</string>
+    <string name="update_data">Ανανέωση δεδομένων</string>
+    <string name="data_information">Πληροφορίες δεδομένων</string>
 </resources>

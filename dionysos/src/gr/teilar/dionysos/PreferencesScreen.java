@@ -21,5 +21,25 @@ public class PreferencesScreen extends PreferenceActivity {
 				return true;
 			}
 		});
+		
+		Preference downloadPref = (Preference) findPreference("updatePreference");
+		downloadPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				Intent i = new Intent(getBaseContext(),
+						gr.teilar.dionysos.Dionysos.class);
+				startActivity(i);
+				return true;
+			}
+		});
+		
+		Preference dataInformationPreference = (Preference) findPreference("dataInformationPreference");
+		dataInformationPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				Intent i = new Intent(getBaseContext(),
+						gr.teilar.dionysos.AboutAppScreen.class);
+				startActivity(i);
+				return true;
+			}
+		});
 	}
 }
