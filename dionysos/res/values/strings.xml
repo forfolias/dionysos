@@ -17,11 +17,23 @@
     <string name="missingPassword">Παρακαλώ συμπληρώστε τον κωδικό του χρήστη στις ρυθμίσεις της εφαρμογής</string>
     <string name="downloading_data">Κατέβασμα δεδομένων</string>
     <string name="downloading_grades">Κατέβασμα μαθημάτων και βαθμολογιών</string>
-    <string name="writing_grades">Εγγραφή των μαθημάτων και βαθμολογιών στην sdcard</string>
+    <string name="writing_grades">Εγγραφή μαθημάτων και βαθμολογιών στην sdcard</string>
     <string name="connecting">Πραγματοποιείται η σύνδεση με την ηλεκτρονική Γραμματεία</string>
     <string name="connection_error">Δεν υπάρχει διαθέσιμη σύνδεση δεδομένων. Παρακαλώ συνδεθείτε και ξαναπροσπαθήστε.</string>
     <string name="download_success">Το κατέβασμα των δεδομένων ολοκληρώθηκε με επιτυχία.</string>
     <string name="download_fail">Το κατέβασμα των δεδομένων δεν ολοκληρώθηκε επιτυχώς.</string>
     <string name="update_data">Ανανέωση δεδομένων</string>
     <string name="data_information">Πληροφορίες δεδομένων</string>
+    <string name="downloading_lessons">Κατέβασμα δήλωσης μαθημάτων</string>
+    <string name="writing_lessons">Εγγραφή δήλωσης στην sdcard</string>
+    <string name="downloading_requests">Κατέβασμα αιτήσεων</string>
+    <string name="writing_requests">Εγγραφή αιτήσεων στην sdcard</string>
+    <string name="connecting_error">Σφάλμα σύνδεσης με το διακομιστή της υπηρεσίας</string>
+    <string name="downloading_grades_error">Σφάλμα κατά το κατέβασμα των βαθμολογιών</string>
+    <string name="writing_grades_error">Σφάλμα κατά την εγγραφή των βαθμολογιών στην sdcard</string>
+    <string name="downloading_lessons_error">Σφάλμα κατά το κατέβασμα της δήλωσης μαθημάτων</string>
+    <string name="writing_lessons_error">Σφάλμα κατά την εγραφή της δήλωσης στην scdcard</string>
+    <string name="downloading_requests_error">Σφάλμα κατά το κατέβασμα των αιτήσεων</string>
+    <string name="writing_requests_error">Σφάλμα κατά την εγραφή των αιτήσεων</string>
+    <string name="connection_check">Έλεγχος σύνδεσης δεδομένων</string>
 </resources>

@@ -45,15 +45,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Dionysos extends Activity {
+
+	private static final String GRADES_URL = "https://dionysos.teilar.gr/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3";
+	private static final String LESSONS_URL = "";
+	private static final String REQUESTS_URL = "";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.downloading);
-		
-		final ProgressBar progress = (ProgressBar)findViewById(R.id.downloadingProgressBar);
-        final TextView    textview = (TextView)findViewById(R.id.downloadingProgressText);
-        
-        new DownloadData(this, progress, textview).execute();
+
+		final ProgressBar progress = (ProgressBar) findViewById(R.id.downloadingProgressBar);
+		final TextView textview = (TextView) findViewById(R.id.downloadingProgressText);
+
+		new DownloadData(this, progress, textview).execute();
 	}
 
 	private static void connectToDionysos(String username, String password) {
@@ -87,17 +92,16 @@ public class Dionysos extends Activity {
 		}
 	}
 
-	public static String downloadGrades() {
+	public static String downloadURL(String url) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		String html = "";
 		try {
-			
-			HttpGet httpget = new HttpGet(
-					"https://dionysos.teilar.gr/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3");
+
+			HttpGet httpget = new HttpGet(url);
 			HttpResponse ratesresponse = httpclient.execute(httpget);
-			html = inputStreamToString(
-					ratesresponse.getEntity().getContent()).toString();
-			
+			html = inputStreamToString(ratesresponse.getEntity().getContent())
+					.toString();
+
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +120,10 @@ public class Dionysos extends Activity {
 		return html;
 	}
 
-	private static void parseAndCreateGradesXML(String html) {
+	private static Boolean parseAndCreateGradesXML(String html) {
+		if (html.equals(""))
+			return false;
+
 		Document doc = Jsoup.parse(html);
 
 		Elements gradestable = doc.select("table[cellpadding=4]");
@@ -188,12 +195,140 @@ public class Dionysos extends Activity {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		}
-
+		return true;
 	}
 
-	private static String getHtmlFromFile() {
+	private static Boolean parseAndCreateLessonsXML(String html) {
+		if (html.equals(""))
+			return false;
+
+		Document doc = Jsoup.parse(html);
+
+		// TODO Parse the html
+
+		Elements gradestable = doc.select("table[cellpadding=4]");
+		Elements grades = gradestable.select("td[colspan=2]");
+
+		Elements trs = grades.select("table > tbody > tr");
+		Elements tds;
+
+		XmlSerializer xmlSerializer = Xml.newSerializer();
+		StringWriter writer = new StringWriter();
+
+		try {
+			xmlSerializer.setOutput(writer);
+			xmlSerializer.startDocument("UTF-8", true);
+			xmlSerializer.startTag("", "lessons");
+
+			for (Element tr : trs) {
+				tds = tr.select("td");
+				xmlSerializer.startTag("", "lesson");
+				xmlSerializer.attribute("", "ores", tds.get(4).text());
+				xmlSerializer.attribute("", "dm", tds.get(6).text());
+				xmlSerializer.text(tds.get(1).text()
+						.replaceAll("\\(.*?\\)  ", ""));
+				xmlSerializer.endTag("", "lesson");
+			}
+
+			xmlSerializer.endTag("", "lessons");
+			xmlSerializer.endDocument();
+
+			File direct = new File(Environment.getExternalStorageDirectory()
+					+ "/egrammatia");
+			if (!direct.exists()) {
+				direct.mkdir();
+			}
+
+			File myFile = new File("/sdcard/egrammatia/lessons.xml");
+			myFile.createNewFile();
+			FileOutputStream fOut = new FileOutputStream(myFile);
+			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+			myOutWriter.append(writer.toString());
+			myOutWriter.close();
+			fOut.close();
+
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return true;
+	}
+
+	private static Boolean parseAndCreateRequestsXML(String html) {
+		if (html.equals(""))
+			return false;
+
+		Document doc = Jsoup.parse(html);
+
+		// TODO Parse the html
+
+		Elements gradestable = doc.select("table[cellpadding=4]");
+		Elements grades = gradestable.select("td[colspan=2]");
+
+		Elements trs = grades.select("table > tbody > tr");
+		Elements tds;
+
+		XmlSerializer xmlSerializer = Xml.newSerializer();
+		StringWriter writer = new StringWriter();
+
+		try {
+			xmlSerializer.setOutput(writer);
+			xmlSerializer.startDocument("UTF-8", true);
+			xmlSerializer.startTag("", "lessons");
+
+			for (Element tr : trs) {
+				tds = tr.select("td");
+				xmlSerializer.startTag("", "lesson");
+				xmlSerializer.attribute("", "ores", tds.get(4).text());
+				xmlSerializer.attribute("", "dm", tds.get(6).text());
+				xmlSerializer.text(tds.get(1).text()
+						.replaceAll("\\(.*?\\)  ", ""));
+				xmlSerializer.endTag("", "lesson");
+			}
+
+			xmlSerializer.endTag("", "lessons");
+			xmlSerializer.endDocument();
+
+			File direct = new File(Environment.getExternalStorageDirectory()
+					+ "/egrammatia");
+			if (!direct.exists()) {
+				direct.mkdir();
+			}
+
+			File myFile = new File("/sdcard/egrammatia/lessons.xml");
+			myFile.createNewFile();
+			FileOutputStream fOut = new FileOutputStream(myFile);
+			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+			myOutWriter.append(writer.toString());
+			myOutWriter.close();
+			fOut.close();
+
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return true;
+	}
+
+	private static String getHtmlFromFile(String filePath) {
 		File sdcard = Environment.getExternalStorageDirectory();
-		File file = new File(sdcard, "html.txt");
+		File file = new File(sdcard, filePath);
 		StringBuilder text = new StringBuilder();
 
 		try {
@@ -233,7 +368,7 @@ public class Dionysos extends Activity {
 		// Return full string
 		return total;
 	}
-	
+
 	private Boolean isOnline() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -242,50 +377,66 @@ public class Dionysos extends Activity {
 
 		return false;
 	}
-	
+
 	final class DownloadData extends AsyncTask<Void, Integer, Void> {
-	    private final int titles[] = {R.string.connecting,
-	    							  R.string.downloading_grades,
-	                                  R.string.writing_grades};
-	    private final int progr[]  = {10, 15, 15};
+		private final int titles[] = { R.string.connection_check,
+				R.string.connecting, R.string.downloading_grades,
+				R.string.writing_grades, R.string.downloading_lessons,
+				R.string.writing_lessons, R.string.downloading_requests,
+				R.string.writing_requests };
 
-	    private int index;
+		private final int errors[] = { R.string.connection_error,
+				R.string.connecting_error, R.string.downloading_grades_error,
+				R.string.writing_grades_error,
+				R.string.downloading_lessons_error,
+				R.string.writing_lessons_error,
+				R.string.downloading_requests_error,
+				R.string.writing_requests_error };
 
-	    private final Activity parent;
-	    private final ProgressBar progress;
-	    private final TextView textview;
+		private final int progr[] = { 2, 20, 18, 8, 18, 8, 18, 8 };
 
-	    public DownloadData(final Activity parent, final ProgressBar progress, final TextView textview) {
-	        this.parent = parent;
-	        this.progress = progress;
-	        this.textview = textview;
-	    }
+		private int index;
 
-	    @Override
-	    protected void onPreExecute() {
-	        int max = 0;
-	        for (final int p : progr) {
-	            max += p;
-	        }
-	        progress.setMax(max);
-	        index = 0;
-	        progress.setVisibility(View.VISIBLE);
-	    }
+		private final Activity parent;
+		private final ProgressBar progress;
+		private final TextView textview;
 
-	    @Override
-	    protected Void doInBackground(final Void... params) {
-	    	publishProgress();
-	    	
-	    	if(!isOnline())
-	    		Toast.makeText(parent, R.string.connection_error,
+		public DownloadData(final Activity parent, final ProgressBar progress,
+				final TextView textview) {
+			this.parent = parent;
+			this.progress = progress;
+			this.textview = textview;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			int max = 0;
+			for (final int p : progr) {
+				max += p;
+			}
+			progress.setMax(max);
+			index = 0;
+			progress.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		protected Void doInBackground(final Void... params) {
+			if (!isOnline()) {
+				Toast.makeText(parent, R.string.connection_error,
 						Toast.LENGTH_LONG).show();
-	    	
-	    	SharedPreferences prefs = PreferenceManager
+				return null;
+			}
+
+			publishProgress();
+
+			SharedPreferences prefs = PreferenceManager
 					.getDefaultSharedPreferences(this.parent);
 			String username = prefs.getString("username", "");
 			String password = prefs.getString("password", "");
 			Boolean error = false;
 			String errorMsg = "";
+			
+			errorMsg = getResources().getString(errors[index]);
 
 			if (username.equals("")) {
 				error = true;
@@ -297,41 +448,49 @@ public class Dionysos extends Activity {
 			}
 
 			if (error) {
-				Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getApplicationContext(), errorMsg,
+						Toast.LENGTH_LONG).show();
 				Intent i = new Intent(getBaseContext(),
 						gr.teilar.dionysos.PreferencesScreen.class);
 				startActivity(i);
 			}
-			
+
 			connectToDionysos(username, password);
 			publishProgress();
 
-			parseAndCreateGradesXML(downloadGrades());
+			if (!parseAndCreateGradesXML(downloadURL(GRADES_URL)))
+				return null;
 			publishProgress();
-			
-	        return null;
-	    }
 
-	    @Override
-	    protected void onProgressUpdate(final Integer... values) {
-	        textview.setText(titles[index]);
-	        progress.incrementProgressBy(progr[index]);
-	        ++index;
-	    }
+			if (!parseAndCreateLessonsXML(downloadURL(LESSONS_URL)))
+				return null;
+			publishProgress();
 
-	    @Override
-	    protected void onPostExecute(final Void result) {
-	    	progress.setVisibility(View.GONE);
-	    	if (index == 1)
-	    		Toast.makeText(parent, R.string.download_fail,
+			if (!parseAndCreateRequestsXML(downloadURL(REQUESTS_URL)))
+				return null;
+			publishProgress();
+
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(final Integer... values) {
+			textview.setText(titles[index]);
+			progress.incrementProgressBy(progr[index]);
+			++index;
+		}
+
+		@Override
+		protected void onPostExecute(final Void result) {
+			progress.setVisibility(View.GONE);
+			if (index != 7)
+				Toast.makeText(parent, R.string.download_fail,
 						Toast.LENGTH_LONG).show();
-	    	else
-	    		Toast.makeText(parent, R.string.download_success,
-					Toast.LENGTH_LONG).show();
-	        parent.finish();
-	    }
+			else
+				Toast.makeText(parent, R.string.download_success,
+						Toast.LENGTH_LONG).show();
+			parent.finish();
+		}
 	}
-	
-	
+
 }
