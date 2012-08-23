@@ -20,6 +20,10 @@ public class MainMenu extends Activity {
 		
 		File myFile = new File("/sdcard/egrammatia/grades.xml");
 		myFile.delete();
+		myFile = new File("/sdcard/egrammatia/lessons.xml");
+		myFile.delete();
+		myFile = new File("/sdcard/egrammatia/requests.xml");
+		myFile.delete();
 
 		findViewById(R.id.preferences_button).setOnClickListener(
 				new OnClickListener() {

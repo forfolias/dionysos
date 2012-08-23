@@ -47,8 +47,9 @@ import android.widget.Toast;
 public class Dionysos extends Activity {
 
 	private static final String GRADES_URL = "https://dionysos.teilar.gr/unistudent/stud_CResults.asp?studPg=1&mnuid=mnu3";
-	private static final String LESSONS_URL = "";
-	private static final String REQUESTS_URL = "";
+	private static final String LESSONS_URL = "https://dionysos.teilar.gr/unistudent/stud_NewClass.asp?studPg=1&mnuid=diloseis;newDil&";
+	private static final String REQUESTS_URL = "https://dionysos.teilar.gr/unistudent/stud_reqStatus.asp?studPg=1&mnuid=forms;sForm&";
+	private static DefaultHttpClient httpclient;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,15 +63,14 @@ public class Dionysos extends Activity {
 	}
 
 	private static void connectToDionysos(String username, String password) {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-
+		httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(
 				"https://dionysos.teilar.gr/unistudent/login.asp");
 
 		try {
 			@SuppressWarnings("unused")
-			HttpResponse ratesresponse;
-			ratesresponse = httpclient.execute(httpget);
+			HttpResponse connectionResponse;
+			connectionResponse = httpclient.execute(httpget);
 
 			HttpPost httpost = new HttpPost(
 					"https://dionysos.teilar.gr/unistudent/login.asp");
@@ -82,7 +82,7 @@ public class Dionysos extends Activity {
 
 			httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 
-			ratesresponse = httpclient.execute(httpost);
+			connectionResponse = httpclient.execute(httpost);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class Dionysos extends Activity {
 	}
 
 	public static String downloadURL(String url) {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
+//		httpclient = new DefaultHttpClient();
 		String html = "";
 		try {
 
@@ -115,7 +115,7 @@ public class Dionysos extends Activity {
 			// When HttpClient instance is no longer needed,
 			// shut down the connection manager to ensure
 			// immediate deallocation of all system resources
-			httpclient.getConnectionManager().shutdown();
+			
 		}
 		return html;
 	}
@@ -199,19 +199,13 @@ public class Dionysos extends Activity {
 	}
 
 	private static Boolean parseAndCreateLessonsXML(String html) {
-		if (html.equals(""))
-			return false;
-
 		Document doc = Jsoup.parse(html);
+		
+		Element table = doc.select("#mainTable").get(1).select("table[cellspacing=2]").last();
 
-		// TODO Parse the html
-
-		Elements gradestable = doc.select("table[cellpadding=4]");
-		Elements grades = gradestable.select("td[colspan=2]");
-
-		Elements trs = grades.select("table > tbody > tr");
+		Elements trs = table.select("tr[bgcolor=#F1F1F1]");
 		Elements tds;
-
+		
 		XmlSerializer xmlSerializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
 
@@ -223,10 +217,10 @@ public class Dionysos extends Activity {
 			for (Element tr : trs) {
 				tds = tr.select("td");
 				xmlSerializer.startTag("", "lesson");
-				xmlSerializer.attribute("", "ores", tds.get(4).text());
-				xmlSerializer.attribute("", "dm", tds.get(6).text());
-				xmlSerializer.text(tds.get(1).text()
-						.replaceAll("\\(.*?\\)  ", ""));
+				xmlSerializer.attribute("", "eksamino", tds.get(3).text());
+				xmlSerializer.attribute("", "ores", tds.get(6).text());
+				xmlSerializer.attribute("", "dm", tds.get(5).text());
+				xmlSerializer.text(tds.get(2).select("span").first().text());
 				xmlSerializer.endTag("", "lesson");
 			}
 
@@ -270,11 +264,8 @@ public class Dionysos extends Activity {
 
 		// TODO Parse the html
 
-		Elements gradestable = doc.select("table[cellpadding=4]");
-		Elements grades = gradestable.select("td[colspan=2]");
-
-		Elements trs = grades.select("table > tbody > tr");
-		Elements tds;
+		Element td = doc.select("tr.TableCellBold > td").first();
+		Elements tables = td.select("table");
 
 		XmlSerializer xmlSerializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
@@ -282,19 +273,16 @@ public class Dionysos extends Activity {
 		try {
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8", true);
-			xmlSerializer.startTag("", "lessons");
+			xmlSerializer.startTag("", "requests");
 
-			for (Element tr : trs) {
-				tds = tr.select("td");
-				xmlSerializer.startTag("", "lesson");
-				xmlSerializer.attribute("", "ores", tds.get(4).text());
-				xmlSerializer.attribute("", "dm", tds.get(6).text());
-				xmlSerializer.text(tds.get(1).text()
-						.replaceAll("\\(.*?\\)  ", ""));
-				xmlSerializer.endTag("", "lesson");
+			for (Element table : tables) {
+				xmlSerializer.startTag("", "request");
+				xmlSerializer.attribute("", "date", table.select("td").get(1).text());
+				xmlSerializer.text(table.select("td").get(2).text());
+				xmlSerializer.endTag("", "request");
 			}
 
-			xmlSerializer.endTag("", "lessons");
+			xmlSerializer.endTag("", "requests");
 			xmlSerializer.endDocument();
 
 			File direct = new File(Environment.getExternalStorageDirectory()
@@ -303,7 +291,7 @@ public class Dionysos extends Activity {
 				direct.mkdir();
 			}
 
-			File myFile = new File("/sdcard/egrammatia/lessons.xml");
+			File myFile = new File("/sdcard/egrammatia/requests.xml");
 			myFile.createNewFile();
 			FileOutputStream fOut = new FileOutputStream(myFile);
 			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
@@ -435,6 +423,7 @@ public class Dionysos extends Activity {
 			String password = prefs.getString("password", "");
 			Boolean error = false;
 			String errorMsg = "";
+			String html;
 			
 			errorMsg = getResources().getString(errors[index]);
 
@@ -457,19 +446,30 @@ public class Dionysos extends Activity {
 
 			connectToDionysos(username, password);
 			publishProgress();
-
-			if (!parseAndCreateGradesXML(downloadURL(GRADES_URL)))
+			
+			html = downloadURL(GRADES_URL);
+			publishProgress();
+			
+			if (!parseAndCreateGradesXML(html))
+				return null;
+			publishProgress();
+			
+			html = downloadURL(LESSONS_URL);
+			publishProgress();
+			
+			if (!parseAndCreateLessonsXML(html))
 				return null;
 			publishProgress();
 
-			if (!parseAndCreateLessonsXML(downloadURL(LESSONS_URL)))
+			html = downloadURL(REQUESTS_URL);
+			publishProgress();
+			
+			if (!parseAndCreateRequestsXML(html))
 				return null;
 			publishProgress();
-
-			if (!parseAndCreateRequestsXML(downloadURL(REQUESTS_URL)))
-				return null;
-			publishProgress();
-
+			
+			httpclient.getConnectionManager().shutdown();
+			index = 100;
 			return null;
 		}
 
@@ -483,7 +483,7 @@ public class Dionysos extends Activity {
 		@Override
 		protected void onPostExecute(final Void result) {
 			progress.setVisibility(View.GONE);
-			if (index != 7)
+			if (index != 100)
 				Toast.makeText(parent, R.string.download_fail,
 						Toast.LENGTH_LONG).show();
 			else
