@@ -10,7 +10,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -93,7 +95,6 @@ public class Dionysos extends Activity {
 	}
 
 	public static String downloadURL(String url) {
-//		httpclient = new DefaultHttpClient();
 		String html = "";
 		try {
 
@@ -115,7 +116,6 @@ public class Dionysos extends Activity {
 			// When HttpClient instance is no longer needed,
 			// shut down the connection manager to ensure
 			// immediate deallocation of all system resources
-			
 		}
 		return html;
 	}
@@ -136,11 +136,13 @@ public class Dionysos extends Activity {
 
 		XmlSerializer xmlSerializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
+		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 		try {
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8", true);
 			xmlSerializer.startTag("", "lessons");
+			xmlSerializer.attribute("", "date", s.format(new Date()));
 
 			for (Element tr : trs) {
 				if (tr.attr("height").equals("15")
@@ -208,11 +210,13 @@ public class Dionysos extends Activity {
 		
 		XmlSerializer xmlSerializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
+		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 		try {
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8", true);
 			xmlSerializer.startTag("", "lessons");
+			xmlSerializer.attribute("", "date", s.format(new Date()));
 
 			for (Element tr : trs) {
 				tds = tr.select("td");
@@ -262,22 +266,22 @@ public class Dionysos extends Activity {
 
 		Document doc = Jsoup.parse(html);
 
-		// TODO Parse the html
-
 		Element td = doc.select("tr.TableCellBold > td").first();
 		Elements tables = td.select("table");
 
 		XmlSerializer xmlSerializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
+		SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 		try {
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8", true);
 			xmlSerializer.startTag("", "requests");
+			xmlSerializer.attribute("", "date", s.format(new Date()));
 
 			for (Element table : tables) {
 				xmlSerializer.startTag("", "request");
-				xmlSerializer.attribute("", "date", table.select("td").get(1).text());
+				xmlSerializer.attribute("", "date", table.select("td").get(1).text().replace("-", "/"));
 				xmlSerializer.text(table.select("td").get(2).text());
 				xmlSerializer.endTag("", "request");
 			}
