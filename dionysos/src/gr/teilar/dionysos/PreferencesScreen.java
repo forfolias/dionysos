@@ -36,7 +36,7 @@ public class PreferencesScreen extends PreferenceActivity {
 		dataInformationPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 				Intent i = new Intent(getBaseContext(),
-						gr.teilar.dionysos.AboutAppScreen.class);
+						gr.teilar.dionysos.AboutDataScreen.class);
 				startActivity(i);
 				return true;
 			}

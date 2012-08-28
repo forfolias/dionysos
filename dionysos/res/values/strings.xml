@@ -2,9 +2,8 @@
 <resources>
     <string name="appName">Ηλεκτρονική Γραμματεία</string>
     <string name="welcome_message">Καλως ορίσατε στην Ηλεκτρονική Γραμματεία του ΤΕΙ Λάρισας</string>
-    <string name="rates">Βαθμολογίες</string>
-    <string name="requests">Οι αιτήσεις μου</string>
-    <string name="lessons">Η δήλωσή μου</string>
+    <string name="my_requests">Οι αιτήσεις μου</string>
+    <string name="lessons">Δηλώσεις μαθημάτων</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="userCredentials">Στοιχεία εισόδου</string>
     <string name="usernameDialogMessage">Παρακαλώ εισάγετε το όνομα χρήστη</string>
@@ -36,4 +35,9 @@
     <string name="downloading_requests_error">Σφάλμα κατά το κατέβασμα των αιτήσεων</string>
     <string name="writing_requests_error">Σφάλμα κατά την εγραφή των αιτήσεων</string>
     <string name="connection_check">Έλεγχος σύνδεσης δεδομένων</string>
+    <string name="data">Δεδομένα</string>
+    <string name="last_data_download">Τελευταίες ενημερώσεις δεδομένων</string>
+    <string name="loading">Φορτώνει...</string>
+    <string name="grades">Βαθμολογίες</string>
+    <string name="requests">Αιτήσεις</string>
 </resources>

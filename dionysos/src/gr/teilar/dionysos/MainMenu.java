@@ -34,15 +34,6 @@ public class MainMenu extends Activity {
 						startActivity(i);
 					}
 				});
-		findViewById(R.id.rates_button).setOnClickListener(
-				new OnClickListener() {
-					public void onClick(View v) {
-						Intent i = new Intent(
-								getBaseContext(),
-								gr.teilar.dionysos.Dionysos.class);
-						startActivity(i);
-					}
-				});
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {

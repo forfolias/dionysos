@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView
+		android:layout_width="wrap_content"
+		android:paddingTop="20dp"
+		android:paddingBottom="20dp"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="@string/last_data_download"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/last_data_download_tv"></TextView>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/grades"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_grades_tv"
+		android:layout_below="@+id/last_data_download_tv"
+		android:layout_alignParentLeft="true"></TextView>
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingRight="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/loading"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_grades_date_tv"
+		android:layout_below="@+id/last_data_download_tv"
+		android:layout_alignParentRight="true"></TextView>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/lessons"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_lessons_tv"
+		android:layout_below="@+id/data_info_grades_tv"
+		android:layout_alignParentLeft="true"></TextView>
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingRight="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/loading"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_lessons_date_tv"
+		android:layout_below="@+id/data_info_grades_date_tv"
+		android:layout_alignParentRight="true"></TextView>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/requests"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_requests_tv"
+		android:layout_below="@+id/data_info_lessons_tv"
+		android:layout_alignParentLeft="true"></TextView>
+	<TextView
+		android:layout_height="wrap_content"
+		android:paddingRight="10dp"
+		android:paddingBottom="10dp"
+		android:text="@string/loading"
+		android:layout_width="wrap_content"
+		android:id="@+id/data_info_requests_date_tv"
+		android:layout_below="@+id/data_info_lessons_date_tv"
+		android:layout_alignParentRight="true"></TextView>
+		
+	<Button
+		android:id="@+id/update_data_now_info_screen"
+		android:layout_height="wrap_content"
+		android:text="@string/update_data"
+		android:layout_width="wrap_content"
+		android:layout_below="@+id/data_info_requests_tv"
+		android:layout_centerHorizontal="true"></Button>
+</RelativeLayout>

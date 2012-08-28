@@ -38,7 +38,11 @@
 			android:label="@string/appName"
 			android:theme="@android:style/Theme.Dialog" />
 		<activity
+			android:name=".AboutDataScreen"
+			android:label="@string/data_information"
+			android:theme="@android:style/Theme.Dialog" />
+		<activity
 			android:name=".RatesScreen"
-			android:label="@string/rates" />
+			android:label="@string/grades" />
 	</application>
 </manifest>

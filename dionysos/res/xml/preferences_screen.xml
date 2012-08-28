@@ -14,7 +14,7 @@
 			android:key="password"
 			android:title="@string/password" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/aboutApp">
+	<PreferenceCategory android:title="@string/data">
 		<Preference
 			android:key="updatePreference"
 			android:title="@string/update_data" />

@@ -40,6 +40,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -125,7 +126,10 @@ public class Dionysos extends Activity {
 			return false;
 
 		Document doc = Jsoup.parse(html);
-
+		
+		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
+			return false;
+		
 		Elements gradestable = doc.select("table[cellpadding=4]");
 		Elements grades = gradestable.select("td[colspan=2]");
 
@@ -203,6 +207,9 @@ public class Dionysos extends Activity {
 	private static Boolean parseAndCreateLessonsXML(String html) {
 		Document doc = Jsoup.parse(html);
 		
+		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
+			return false;
+		
 		Element table = doc.select("#mainTable").get(1).select("table[cellspacing=2]").last();
 
 		Elements trs = table.select("tr[bgcolor=#F1F1F1]");
@@ -266,6 +273,9 @@ public class Dionysos extends Activity {
 
 		Document doc = Jsoup.parse(html);
 
+		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
+			return false;
+		
 		Element td = doc.select("tr.TableCellBold > td").first();
 		Elements tables = td.select("table");
 
@@ -454,22 +464,28 @@ public class Dionysos extends Activity {
 			html = downloadURL(GRADES_URL);
 			publishProgress();
 			
-			if (!parseAndCreateGradesXML(html))
+			if (!parseAndCreateGradesXML(html)){
+				index = 110;
 				return null;
+			}
 			publishProgress();
 			
 			html = downloadURL(LESSONS_URL);
 			publishProgress();
 			
-			if (!parseAndCreateLessonsXML(html))
+			if (!parseAndCreateLessonsXML(html)){
+				index = 110;
 				return null;
+			}
 			publishProgress();
 
 			html = downloadURL(REQUESTS_URL);
 			publishProgress();
 			
-			if (!parseAndCreateRequestsXML(html))
+			if (!parseAndCreateRequestsXML(html)){
+				index = 110;
 				return null;
+			}
 			publishProgress();
 			
 			httpclient.getConnectionManager().shutdown();
@@ -487,9 +503,14 @@ public class Dionysos extends Activity {
 		@Override
 		protected void onPostExecute(final Void result) {
 			progress.setVisibility(View.GONE);
-			if (index != 100)
+			if (index != 100) {
 				Toast.makeText(parent, R.string.download_fail,
 						Toast.LENGTH_LONG).show();
+				if(index == 110) {
+					Toast.makeText(parent, R.string.dionysos_error,
+							Toast.LENGTH_LONG).show();
+				}
+			}
 			else
 				Toast.makeText(parent, R.string.download_success,
 						Toast.LENGTH_LONG).show();
