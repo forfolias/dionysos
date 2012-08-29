@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/userCredentials">
+    <PreferenceCategory android:title="@string/user_credentials">
 		<EditTextPreference
-			android:dialogMessage="@string/usernameDialogMessage"
+			android:dialogMessage="@string/username_dialog_message"
 			android:dialogTitle="@string/username"
 			android:key="username"
 			android:title="@string/username" />
 		<EditTextPreference
-			android:dialogMessage="@string/passwordDialogMessage"
+			android:dialogMessage="@string/password_dialog_message"
 			android:dialogTitle="@string/password"
 			android:inputType="textPassword"
 			android:key="password"
 			android:title="@string/password" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/data">
+		<EditTextPreference
+			android:dialogMessage="@string/update_data_dialog_message"
+			android:dialogTitle="@string/update_data"
+			android:inputType="number"
+			android:key="updateOldDataPreference"
+			android:title="@string/update_data" />
 		<Preference
 			android:key="updatePreference"
-			android:title="@string/update_data" />
+			android:title="@string/update_old_data" />
 		<Preference
 			android:key="dataInformationPreference"
 			android:title="@string/data_information" />
