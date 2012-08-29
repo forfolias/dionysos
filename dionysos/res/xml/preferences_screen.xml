@@ -6,24 +6,22 @@
 			android:dialogMessage="@string/username_dialog_message"
 			android:dialogTitle="@string/username"
 			android:key="username"
-			android:title="@string/username" />
+			android:title="@string/username" android:summary="@string/username_summary"/>
 		<EditTextPreference
 			android:dialogMessage="@string/password_dialog_message"
 			android:dialogTitle="@string/password"
-			android:inputType="textPassword"
 			android:key="password"
-			android:title="@string/password" />
+			android:title="@string/password" android:inputType="textPassword" android:summary="@string/password_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/data">
 		<EditTextPreference
 			android:dialogMessage="@string/update_data_dialog_message"
 			android:dialogTitle="@string/update_data"
-			android:inputType="number"
 			android:key="updateOldDataPreference"
-			android:title="@string/update_data" />
+			android:title="@string/update_old_data" android:inputType="number" android:summary="@string/update_old_data_summary"/>
 		<Preference
 			android:key="updatePreference"
-			android:title="@string/update_old_data" />
+			android:title="@string/update_data" android:summary="@string/update_data_now"/>
 		<Preference
 			android:key="dataInformationPreference"
 			android:title="@string/data_information" />
