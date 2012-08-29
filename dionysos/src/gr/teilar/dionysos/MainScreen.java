@@ -10,20 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MainMenu extends Activity {
-	/** Called when the activity is first created. */
+public class MainScreen extends Activity {
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_menu);
+		setContentView(R.layout.main_screen);
 		
-		
-		File myFile = new File("/sdcard/egrammatia/grades.xml");
-		myFile.delete();
-		myFile = new File("/sdcard/egrammatia/lessons.xml");
-		myFile.delete();
-		myFile = new File("/sdcard/egrammatia/requests.xml");
-		myFile.delete();
+//		File myFile = new File("/sdcard/egrammatia/grades.xml");
+//		myFile.delete();
+//		myFile = new File("/sdcard/egrammatia/lessons.xml");
+//		myFile.delete();
+//		myFile = new File("/sdcard/egrammatia/requests.xml");
+//		myFile.delete();
 
 		findViewById(R.id.preferences_button).setOnClickListener(
 				new OnClickListener() {
@@ -31,6 +30,24 @@ public class MainMenu extends Activity {
 						Intent i = new Intent(
 								getBaseContext(),
 								gr.teilar.dionysos.PreferencesScreen.class);
+						startActivity(i);
+					}
+				});
+		findViewById(R.id.lessons_button).setOnClickListener(
+				new OnClickListener() {
+					public void onClick(View v) {
+						Intent i = new Intent(
+								getBaseContext(),
+								gr.teilar.dionysos.LessonsScreen.class);
+						startActivity(i);
+					}
+				});
+		findViewById(R.id.requests_button).setOnClickListener(
+				new OnClickListener() {
+					public void onClick(View v) {
+						Intent i = new Intent(
+								getBaseContext(),
+								gr.teilar.dionysos.RequestsScreen.class);
 						startActivity(i);
 					}
 				});

@@ -22,7 +22,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".MainMenu"
+			android:name=".MainScreen"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 		<activity
@@ -42,7 +42,13 @@
 			android:label="@string/data_information"
 			android:theme="@android:style/Theme.Dialog" />
 		<activity
-			android:name=".RatesScreen"
+			android:name=".GradesScreen"
+			android:label="@string/grades" />
+		<activity
+			android:name=".LessonsScreen"
+			android:label="@string/grades" />
+		<activity
+			android:name=".RequestsScreen"
 			android:label="@string/grades" />
 	</application>
 </manifest>
