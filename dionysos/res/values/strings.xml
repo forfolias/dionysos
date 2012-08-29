@@ -5,10 +5,10 @@
     <string name="my_requests">Οι αιτήσεις μου</string>
     <string name="lessons">Δηλώσεις μαθημάτων</string>
     <string name="preferences">Ρυθμίσεις</string>
-    <string name="userCredentials">Στοιχεία εισόδου</string>
-    <string name="usernameDialogMessage">Παρακαλώ εισάγετε το όνομα χρήστη</string>
+    <string name="user_credentials">Στοιχεία εισόδου</string>
+    <string name="username_dialog_message">Παρακαλώ εισάγετε το όνομα χρήστη</string>
     <string name="username">Όνομα χρήστη</string>
-    <string name="passwordDialogMessage">Παρακαλώ εισάγετε τον κωδικό σας</string>
+    <string name="password_dialog_message">Παρακαλώ εισάγετε τον κωδικό σας</string>
     <string name="password">Κωδικός χρήστη</string>
     <string name="aboutApp">Περί της εφαρμογής</string>
     <string name="dionysos_error">Ο server της υπηρεσίας dionysos δεν επέστρεψε τα αναμενόμενα αποτελέσματα.</string>
@@ -40,4 +40,6 @@
     <string name="loading">Φορτώνει...</string>
     <string name="grades">Βαθμολογίες</string>
     <string name="requests">Αιτήσεις</string>
+    <string name="update_data_dialog_message">Ανανέωση των δεδομένων αν είναι παλαιότερα από τα λεπτά παρακάτω : </string>
+    <string name="update_old_data">Χρόνος ανανέωσης δεδομένων</string>
 </resources>
