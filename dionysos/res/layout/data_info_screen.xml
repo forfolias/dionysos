@@ -74,7 +74,7 @@
 	<Button
 		android:id="@+id/update_data_now_info_screen"
 		android:layout_height="wrap_content"
-		android:text="@string/update_data"
+		android:text="@string/update_data_now"
 		android:layout_width="wrap_content"
 		android:layout_below="@+id/data_info_requests_tv"
 		android:layout_centerHorizontal="true"></Button>
