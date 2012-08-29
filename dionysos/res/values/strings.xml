@@ -41,5 +41,9 @@
     <string name="grades">Βαθμολογίες</string>
     <string name="requests">Αιτήσεις</string>
     <string name="update_data_dialog_message">Ανανέωση των δεδομένων αν είναι παλαιότερα από τα λεπτά παρακάτω : </string>
-    <string name="update_old_data">Χρόνος ανανέωσης δεδομένων</string>
+    <string name="update_old_data">Χρόνος ανανέωσης</string>
+    <string name="update_old_data_summary">Αν τα δεδομένα είναι παλαιότερα από τόσα λεπτά, θα ανανεωθούν</string>
+    <string name="update_data_now">Ανανέωση δεδομένων τώρα</string>
+    <string name="username_summary">Το όνομα χρήστη που έχετε στην υπηρεσία dionysos</string>
+    <string name="password_summary">Ο κωδικός που χρησιμοποιείτε στην υπηρεσία dionysos</string>
 </resources>
