@@ -40,7 +40,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -61,8 +60,16 @@ public class Dionysos extends Activity {
 
 		final ProgressBar progress = (ProgressBar) findViewById(R.id.downloadingProgressBar);
 		final TextView textview = (TextView) findViewById(R.id.downloadingProgressText);
-
-		new DownloadData(this, progress, textview).execute();
+		
+		String[] urls = {null, GRADES_URL, LESSONS_URL, REQUESTS_URL};
+		Bundle b = this.getIntent().getExtras();
+		int id = 0;
+		
+		if (b != null) {
+			id = b.getInt("id");
+		}
+		
+		new DownloadData(this, progress, textview, urls[id]).execute();
 	}
 
 	private static void connectToDionysos(String username, String password) {
@@ -397,6 +404,7 @@ public class Dionysos extends Activity {
 
 		private final int progr[] = { 2, 20, 18, 8, 18, 8, 18, 8 };
 
+		private String url;
 		private int index;
 
 		private final Activity parent;
@@ -404,10 +412,11 @@ public class Dionysos extends Activity {
 		private final TextView textview;
 
 		public DownloadData(final Activity parent, final ProgressBar progress,
-				final TextView textview) {
+				final TextView textview, final String urladdr) {
 			this.parent = parent;
 			this.progress = progress;
 			this.textview = textview;
+			this.url = urladdr;
 		}
 
 		@Override
@@ -461,32 +470,62 @@ public class Dionysos extends Activity {
 			connectToDionysos(username, password);
 			publishProgress();
 			
-			html = downloadURL(GRADES_URL);
-			publishProgress();
+			if (url != null ) { /* Download specific url */
+				html = downloadURL(url);
 			
-			if (!parseAndCreateGradesXML(html)){
-				index = 110;
-				return null;
-			}
-			publishProgress();
-			
-			html = downloadURL(LESSONS_URL);
-			publishProgress();
-			
-			if (!parseAndCreateLessonsXML(html)){
-				index = 110;
-				return null;
-			}
-			publishProgress();
+				if (url == GRADES_URL){
+					publishProgress();
+					if (!parseAndCreateGradesXML(html)){
+						index = 110;
+						return null;
+					}
+				}
+				else if (url == LESSONS_URL) {
+					index += 2;
+					publishProgress();
+					if (!parseAndCreateLessonsXML(html)){
+						index = 110;
+						return null;
+					}
+				}
+				else if (url == REQUESTS_URL){
+					index += 4;
+					publishProgress();
+					if (!parseAndCreateRequestsXML(html)){
+						index = 110;
+						return null;
+					}
+				}
+				publishProgress();
+			}	
+			else {  /* Download all urls */
+				html = downloadURL(GRADES_URL);
+				publishProgress();
+				
+				if (!parseAndCreateGradesXML(html)){
+					index = 110;
+					return null;
+				}
+				publishProgress();
+				
+				html = downloadURL(LESSONS_URL);
+				publishProgress();
+				
+				if (!parseAndCreateLessonsXML(html)){
+					index = 110;
+					return null;
+				}
+				publishProgress();
 
-			html = downloadURL(REQUESTS_URL);
-			publishProgress();
-			
-			if (!parseAndCreateRequestsXML(html)){
-				index = 110;
-				return null;
+				html = downloadURL(REQUESTS_URL);
+				publishProgress();
+				
+				if (!parseAndCreateRequestsXML(html)){
+					index = 110;
+					return null;
+				}
+				publishProgress();
 			}
-			publishProgress();
 			
 			httpclient.getConnectionManager().shutdown();
 			index = 100;
@@ -517,5 +556,5 @@ public class Dionysos extends Activity {
 			parent.finish();
 		}
 	}
-
+	
 }
