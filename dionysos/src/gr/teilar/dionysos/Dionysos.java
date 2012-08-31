@@ -10,10 +10,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,6 +33,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.app.Activity;
@@ -384,6 +390,48 @@ public class Dionysos extends Activity {
 		if (ni != null && ni.isConnected())
 			return true;
 
+		return false;
+	}
+	
+	public static Boolean checkUpdate(Context c, String filename) {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(c);
+		int minutes = Integer.parseInt(prefs.getString("updateOldDataPreference", "1"));
+		File file = new File("/sdcard/egrammatia/" + filename + ".xml");
+
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db;
+		org.w3c.dom.Document doc = null;
+		
+		try {
+			db = dbf.newDocumentBuilder();
+			doc = db.parse(file);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		doc.getDocumentElement().normalize();		
+		String date = ((org.w3c.dom.Element) doc.getElementsByTagName(filename).item(0)).getAttribute("date");
+		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		Date reqDate = new Date();
+		try {
+			reqDate = format.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long minDiff = ((new Date().getTime()   - reqDate.getTime() ) / 60000);
+		
+		if (minDiff > minutes)
+			return true;
 		return false;
 	}
 
