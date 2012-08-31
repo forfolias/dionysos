@@ -18,7 +18,7 @@
 			android:dialogMessage="@string/update_data_dialog_message"
 			android:dialogTitle="@string/update_data"
 			android:key="updateOldDataPreference"
-			android:title="@string/update_old_data" android:inputType="number" android:summary="@string/update_old_data_summary"/>
+			android:title="@string/update_old_data" android:summary="@string/update_old_data_summary" android:inputType="number"/>
 		<Preference
 			android:key="updatePreference"
 			android:title="@string/update_data" android:summary="@string/update_data_now"/>
