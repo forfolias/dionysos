@@ -46,4 +46,5 @@
     <string name="update_data_now">Ανανέωση δεδομένων τώρα</string>
     <string name="username_summary">Το όνομα χρήστη που έχετε στην υπηρεσία dionysos</string>
     <string name="password_summary">Ο κωδικός που χρησιμοποιείτε στην υπηρεσία dionysos</string>
+    <string name="data_date">Ημερομηνία δεδομένων : </string>
 </resources>

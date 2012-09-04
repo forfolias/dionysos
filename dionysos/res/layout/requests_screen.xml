@@ -12,5 +12,13 @@
 		android:id="@+id/textView1"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"></TextView>
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="@string/data_date"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:id="@+id/requests_data_date"
+		android:layout_below="@+id/textView1"
+		android:layout_centerHorizontal="true"></TextView>
 
 </RelativeLayout>
