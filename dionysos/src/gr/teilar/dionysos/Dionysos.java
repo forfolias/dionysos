@@ -597,10 +597,13 @@ public class Dionysos extends Activity {
 					Toast.makeText(parent, R.string.dionysos_error,
 							Toast.LENGTH_LONG).show();
 				}
+				parent.setResult(RESULT_CANCELED);
 			}
-			else
+			else {
 				Toast.makeText(parent, R.string.download_success,
 						Toast.LENGTH_LONG).show();
+				parent.setResult(RESULT_OK);
+			}
 			parent.finish();
 		}
 	}
