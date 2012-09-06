@@ -81,11 +81,6 @@ public class AboutDataScreen extends Activity {
 				finish();
 				startActivity(intent);
 			}
-
-			if (resultCode == RESULT_CANCELED) {
-				/* TODO 
-				 * print a message that we display old xml data */
-			}
 		}
 	}
 }
