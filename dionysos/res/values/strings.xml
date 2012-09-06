@@ -3,7 +3,7 @@
     <string name="appName">Ηλεκτρονική Γραμματεία</string>
     <string name="welcome_message">Καλως ορίσατε στην Ηλεκτρονική Γραμματεία του ΤΕΙ Λάρισας</string>
     <string name="my_requests">Οι αιτήσεις μου</string>
-    <string name="lessons">Δηλώσεις μαθημάτων</string>
+    <string name="lessons">Η Δήλωσή μου</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="user_credentials">Στοιχεία εισόδου</string>
     <string name="username_dialog_message">Παρακαλώ εισάγετε το όνομα χρήστη</string>
@@ -47,4 +47,13 @@
     <string name="username_summary">Το όνομα χρήστη που έχετε στην υπηρεσία dionysos</string>
     <string name="password_summary">Ο κωδικός που χρησιμοποιείτε στην υπηρεσία dionysos</string>
     <string name="data_date">Ημερομηνία δεδομένων : </string>
+    <string name="date">Ημερομηνία</string>
+    <string name="counter">A/A</string>
+    <string name="request_title">Τίτλος αίτησης</string>
+    <color name="row_odd">#202020</color>
+    <color name="row_even">#303030</color>
+    <color name="row_header">#454545</color>
+    <string name="semester">Εξάμηνο</string>
+    <string name="hours">ώρες</string>
+    <string name="ects">ΔΜ</string>
 </resources>

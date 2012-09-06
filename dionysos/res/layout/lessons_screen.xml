@@ -5,22 +5,42 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
 		android:text="@string/lessons"
 		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:id="@+id/textView18"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"></TextView>
+	<TextView
+		android:padding="5dp"
+		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:id="@+id/textView1"
-		android:layout_centerHorizontal="true"
-		android:layout_height="wrap_content"></TextView>
+		android:text="@string/data_date"
+		android:id="@+id/lessons_data_date"
+		android:layout_below="@+id/textView18"
+		android:layout_centerHorizontal="true"></TextView>
 	<ScrollView
-		android:layout_height="fill_parent"
-		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
 		android:id="@+id/scrollView1"
-		android:layout_below="@+id/textView1"
+		android:layout_below="@+id/lessons_data_date"
 		android:layout_centerHorizontal="true">
 		<LinearLayout
-			android:id="@+id/lessonsLinearLayout"
+			android:id="@+id/linearLayout1"
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"></LinearLayout>
+			android:layout_height="fill_parent">
+			<TableLayout
+				android:paddingTop="10dp"
+				android:paddingLeft="5dp"
+				android:paddingRight="5dp"
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:id="@+id/tableLessons"
+				android:layout_below="@+id/lessons_data_date"
+				android:layout_centerHorizontal="true">
+			</TableLayout>
+		</LinearLayout>
 	</ScrollView>
 
 </RelativeLayout>

@@ -43,12 +43,15 @@
 			android:theme="@android:style/Theme.Dialog" />
 		<activity
 			android:name=".GradesScreen"
-			android:label="@string/grades" />
+			android:label="@string/grades"
+			android:theme="@android:style/Theme.NoTitleBar" />
 		<activity
 			android:name=".LessonsScreen"
-			android:label="@string/grades" />
+			android:label="@string/lessons" 
+			android:theme="@android:style/Theme.NoTitleBar" />
 		<activity
 			android:name=".RequestsScreen"
-			android:label="@string/grades" />
+			android:label="@string/requests"
+			android:theme="@android:style/Theme.NoTitleBar" />
 	</application>
 </manifest>
