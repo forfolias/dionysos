@@ -58,14 +58,14 @@ public class RequestsScreen extends Activity {
 			db = dbf.newDocumentBuilder();
 			doc = db.parse(file);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			displayError();
+			return;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			displayError();
+			return;
 		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			displayError();
+			return;
 		}
 
 		doc.getDocumentElement().normalize();
@@ -111,6 +111,11 @@ public class RequestsScreen extends Activity {
 			table.addView(hrLine, new LayoutParams(LayoutParams.FILL_PARENT, 1));
 			table.addView(row, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		}
+	}
+	
+	private void displayError() {
+		((TextView) findViewById(R.id.requests_data_date)).setText(getResources().getString(R.string.file_error));
+	
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -56,4 +56,6 @@
     <string name="semester">Εξάμηνο</string>
     <string name="hours">ώρες</string>
     <string name="ects">ΔΜ</string>
+    <string name="not_found">Δε βρέθηκε</string>
+    <string name="file_error">Το αρχείο με τα δεδομένα δε βρέθηκε ή είναι κατεστραμμένο.</string>
 </resources>
