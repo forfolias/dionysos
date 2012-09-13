@@ -46,6 +46,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -445,8 +446,13 @@ public class Dionysos extends Activity {
 				R.string.writing_lessons, R.string.downloading_requests,
 				R.string.writing_requests };
 
-		private final int errors[] = { R.string.connection_error,
-				R.string.connecting_error, R.string.downloading_grades_error,
+		private final int errors[] = { 
+				R.string.connection_error,
+				R.string.connecting_error, 
+				R.string.dionysos_error,
+				R.string.missingUsername,
+				R.string.missingPassword,
+				R.string.downloading_grades_error,
 				R.string.writing_grades_error,
 				R.string.downloading_lessons_error,
 				R.string.writing_lessons_error,
@@ -457,6 +463,7 @@ public class Dionysos extends Activity {
 
 		private String url;
 		private int index;
+		private int errorCode;
 
 		private final Activity parent;
 		private final ProgressBar progress;
@@ -478,14 +485,14 @@ public class Dionysos extends Activity {
 			}
 			progress.setMax(max);
 			index = 0;
+			errorCode = -1;
 			progress.setVisibility(View.VISIBLE);
 		}
 
 		@Override
 		protected Void doInBackground(final Void... params) {
 			if (!isOnline()) {
-				Toast.makeText(parent, R.string.connection_error,
-						Toast.LENGTH_LONG).show();
+				errorCode = 0;
 				return null;
 			}
 
@@ -495,27 +502,15 @@ public class Dionysos extends Activity {
 					.getDefaultSharedPreferences(this.parent);
 			String username = prefs.getString("username", "");
 			String password = prefs.getString("password", "");
-			Boolean error = false;
-			String errorMsg = "";
 			String html;
 			
-			errorMsg = getResources().getString(errors[index]);
-
 			if (username.equals("")) {
-				error = true;
-				errorMsg = getResources().getString(R.string.missingUsername);
+				errorCode = 3;
+				return null;
 			}
 			if (password.equals("")) {
-				error = true;
-				errorMsg = getResources().getString(R.string.missingPassword);
-			}
-
-			if (error) {
-				Toast.makeText(getApplicationContext(), errorMsg,
-						Toast.LENGTH_LONG).show();
-				Intent i = new Intent(getBaseContext(),
-						gr.teilar.dionysos.PreferencesScreen.class);
-				startActivity(i);
+				errorCode = 4;
+				return null;
 			}
 
 			connectToDionysos(username, password);
@@ -527,7 +522,7 @@ public class Dionysos extends Activity {
 				if (url == GRADES_URL){
 					publishProgress();
 					if (!parseAndCreateGradesXML(html)){
-						index = 110;
+						errorCode = 5;
 						return null;
 					}
 				}
@@ -535,7 +530,7 @@ public class Dionysos extends Activity {
 					index += 2;
 					publishProgress();
 					if (!parseAndCreateLessonsXML(html)){
-						index = 110;
+						errorCode = 7;
 						return null;
 					}
 				}
@@ -543,7 +538,7 @@ public class Dionysos extends Activity {
 					index += 4;
 					publishProgress();
 					if (!parseAndCreateRequestsXML(html)){
-						index = 110;
+						errorCode = 9;
 						return null;
 					}
 				}
@@ -554,7 +549,7 @@ public class Dionysos extends Activity {
 				publishProgress();
 				
 				if (!parseAndCreateGradesXML(html)){
-					index = 110;
+					errorCode = 5;
 					return null;
 				}
 				publishProgress();
@@ -563,7 +558,7 @@ public class Dionysos extends Activity {
 				publishProgress();
 				
 				if (!parseAndCreateLessonsXML(html)){
-					index = 110;
+					errorCode = 7;
 					return null;
 				}
 				publishProgress();
@@ -572,7 +567,7 @@ public class Dionysos extends Activity {
 				publishProgress();
 				
 				if (!parseAndCreateRequestsXML(html)){
-					index = 110;
+					errorCode = 9;
 					return null;
 				}
 				publishProgress();
@@ -585,21 +580,29 @@ public class Dionysos extends Activity {
 
 		@Override
 		protected void onProgressUpdate(final Integer... values) {
+			if(index > 100) /* download finished or error */
+				return;
+			
 			textview.setText(titles[index]);
 			progress.incrementProgressBy(progr[index]);
 			++index;
 		}
-
+		
 		@Override
 		protected void onPostExecute(final Void result) {
 			progress.setVisibility(View.GONE);
-			if (index != 100) {
+			if (errorCode != -1) {
+				
+				Toast.makeText(parent, errors[errorCode],
+							Toast.LENGTH_LONG).show();
+				if(errorCode == 3 || errorCode == 4) {
+					parent.finish();
+					Intent i = new Intent(parent,
+							gr.teilar.dionysos.PreferencesScreen.class);
+					startActivity(i);
+				}
 				Toast.makeText(parent, R.string.download_fail,
 						Toast.LENGTH_LONG).show();
-				if(index == 110) {
-					Toast.makeText(parent, R.string.dionysos_error,
-							Toast.LENGTH_LONG).show();
-				}
 				parent.setResult(RESULT_CANCELED);
 			}
 			else {
