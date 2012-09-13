@@ -71,8 +71,10 @@ public class RequestsScreen extends Activity {
 		doc.getDocumentElement().normalize();
 		String date = ((Element) doc.getElementsByTagName("requests").item(0))
 				.getAttribute("date");
+		
+		TextView dataDate = (TextView) findViewById(R.id.requests_data_date);
 
-		((TextView) findViewById(R.id.requests_data_date)).setText(getResources().getString(R.string.data_date) + " " + date);
+		dataDate.setText(dataDate.getText() + " " + date);
 		
 		NodeList requestsList = doc.getElementsByTagName("request");
 		
@@ -121,12 +123,13 @@ public class RequestsScreen extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
+				((TextView) findViewById(R.id.requests_data_date)).setText(getResources().getString(R.string.data_date));
 				displayXml();
 			}
 
 			if (resultCode == RESULT_CANCELED) {
-				/* TODO 
-				 * print a message that we display old xml data */
+				((TextView) findViewById(R.id.requests_data_date)).setText(getResources().getString(R.string.display_old_data));
+				displayXml();
 			}
 		}
 	}

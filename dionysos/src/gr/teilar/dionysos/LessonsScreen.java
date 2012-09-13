@@ -72,7 +72,8 @@ public class LessonsScreen extends Activity {
 		String date = ((Element) doc.getElementsByTagName("lessons").item(0))
 				.getAttribute("date");
 
-		((TextView) findViewById(R.id.lessons_data_date)).setText(getResources().getString(R.string.data_date) + " " + date);
+		TextView dataDate = (TextView) findViewById(R.id.lessons_data_date);
+		dataDate.setText(dataDate.getText() + " " + date);
 		
 		NodeList lessonssList = doc.getElementsByTagName("lesson");
 		
@@ -128,12 +129,13 @@ public class LessonsScreen extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
+				((TextView) findViewById(R.id.lessons_data_date)).setText(getResources().getString(R.string.data_date));
 				displayXml();
 			}
 
 			if (resultCode == RESULT_CANCELED) {
-				/* TODO 
-				 * print a message that we display old xml data */
+				((TextView) findViewById(R.id.lessons_data_date)).setText(getResources().getString(R.string.display_old_data));
+				displayXml();
 			}
 		}
 	}
