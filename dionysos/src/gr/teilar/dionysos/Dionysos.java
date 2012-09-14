@@ -46,7 +46,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -79,7 +78,7 @@ public class Dionysos extends Activity {
 		new DownloadData(this, progress, textview, urls[id]).execute();
 	}
 
-	private static void connectToDionysos(String username, String password) {
+	private static boolean connectToDionysos(String username, String password) {
 		httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(
 				"https://dionysos.teilar.gr/unistudent/login.asp");
@@ -101,12 +100,11 @@ public class Dionysos extends Activity {
 
 			connectionResponse = httpclient.execute(httpost);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 	public static String downloadURL(String url) {
@@ -136,14 +134,8 @@ public class Dionysos extends Activity {
 	}
 
 	private static Boolean parseAndCreateGradesXML(String html) {
-		if (html.equals(""))
-			return false;
-
 		Document doc = Jsoup.parse(html);
-		
-		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
-			return false;
-		
+
 		Elements gradestable = doc.select("table[cellpadding=4]");
 		Elements grades = gradestable.select("td[colspan=2]");
 
@@ -159,9 +151,9 @@ public class Dionysos extends Activity {
 		try {
 			xmlSerializer.setOutput(writer);
 			xmlSerializer.startDocument("UTF-8", true);
-			xmlSerializer.startTag("", "lessons");
+			xmlSerializer.startTag("", "grades");
 			xmlSerializer.attribute("", "date", s.format(new Date()));
-
+			
 			for (Element tr : trs) {
 				if (tr.attr("height").equals("15")
 						|| tr.className().equals("italicHeader")
@@ -171,11 +163,17 @@ public class Dionysos extends Activity {
 					tds = tr.select("td");
 
 					if (tds.size() == 1) {
+						if(eksamino > 0 && eksamino < 8) {
+							xmlSerializer.endTag("", "eksamino");
+						}
 						eksamino++;
+						
+						if(eksamino < 8){
+							xmlSerializer.startTag("", "eksamino");
+							xmlSerializer.attribute("", "id", Integer.toString(eksamino));
+						}
 					} else if (tds.size() == 8) {
 						xmlSerializer.startTag("", "lesson");
-						xmlSerializer.attribute("", "eksamino",
-								Integer.toString(eksamino));
 						xmlSerializer.attribute("", "ores", tds.get(4).text());
 						xmlSerializer.attribute("", "vathmos", tds.get(6)
 								.text());
@@ -185,44 +183,29 @@ public class Dionysos extends Activity {
 					}
 				}
 			}
-
-			xmlSerializer.endTag("", "lessons");
+			
+			xmlSerializer.endTag("", "grades");
 			xmlSerializer.endDocument();
 
-			File direct = new File(Environment.getExternalStorageDirectory()
-					+ "/egrammatia");
-			if (!direct.exists()) {
-				direct.mkdir();
+			if(!writeToFile("/sdcard/egrammatia/grades.xml", writer.toString())){
+				return false;
 			}
-
-			File myFile = new File("/sdcard/egrammatia/grades.xml");
-			myFile.createNewFile();
-			FileOutputStream fOut = new FileOutputStream(myFile);
-			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-			myOutWriter.append(writer.toString());
-			myOutWriter.close();
-			fOut.close();
+				
 
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			return false;
 		}
 		return true;
 	}
 
 	private static Boolean parseAndCreateLessonsXML(String html) {
 		Document doc = Jsoup.parse(html);
-		
-		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
-			return false;
 		
 		Element table = doc.select("#mainTable").get(1).select("table[cellspacing=2]").last();
 
@@ -258,38 +241,24 @@ public class Dionysos extends Activity {
 				direct.mkdir();
 			}
 
-			File myFile = new File("/sdcard/egrammatia/lessons.xml");
-			myFile.createNewFile();
-			FileOutputStream fOut = new FileOutputStream(myFile);
-			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-			myOutWriter.append(writer.toString());
-			myOutWriter.close();
-			fOut.close();
+			if(!writeToFile("/sdcard/egrammatia/lessons.xml", writer.toString()))
+				return false;
 
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			return false;
 		}
 		return true;
 	}
 
 	private static Boolean parseAndCreateRequestsXML(String html) {
-		if (html.equals(""))
-			return false;
-
 		Document doc = Jsoup.parse(html);
 
-		if(doc.text().indexOf("Συνέβη σφάλμα") != -1)
-			return false;
-		
 		Element td = doc.select("tr.TableCellBold > td").first();
 		Elements tables = td.select("table");
 
@@ -318,26 +287,18 @@ public class Dionysos extends Activity {
 			if (!direct.exists()) {
 				direct.mkdir();
 			}
-
-			File myFile = new File("/sdcard/egrammatia/requests.xml");
-			myFile.createNewFile();
-			FileOutputStream fOut = new FileOutputStream(myFile);
-			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-			myOutWriter.append(writer.toString());
-			myOutWriter.close();
-			fOut.close();
+			
+			if(!writeToFile("/sdcard/egrammatia/requests.xml", writer.toString()))
+				return false;
 
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			return false;
 		}
 		return true;
 	}
@@ -383,6 +344,28 @@ public class Dionysos extends Activity {
 
 		// Return full string
 		return total;
+	}
+	
+	public static boolean writeToFile(String filename, String text){
+		File direct = new File(Environment.getExternalStorageDirectory()
+				+ "/egrammatia");
+		if (!direct.exists()) {
+			direct.mkdir();
+		}
+		try {
+			File myFile = new File(filename);
+			myFile.createNewFile();
+			FileOutputStream fOut;
+			fOut = new FileOutputStream(myFile);
+			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+			myOutWriter.append(text);
+			myOutWriter.close();
+			fOut.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+		
 	}
 
 	private Boolean isOnline() {
@@ -513,11 +496,21 @@ public class Dionysos extends Activity {
 				return null;
 			}
 
-			connectToDionysos(username, password);
+			if(!connectToDionysos(username, password)){
+				errorCode = 0;
+				return null;
+			}
+				
 			publishProgress();
 			
 			if (url != null ) { /* Download specific url */
+				
 				html = downloadURL(url);
+				
+				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1 || html.indexOf("You are not authorized") != -1 ){
+					errorCode = 2;
+					return null;
+				}
 			
 				if (url == GRADES_URL){
 					publishProgress();
@@ -545,7 +538,15 @@ public class Dionysos extends Activity {
 				publishProgress();
 			}	
 			else {  /* Download all urls */
+				
+
 				html = downloadURL(GRADES_URL);
+				writeToFile("/sdcard/kikiki.html", html);
+				
+				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1 || html.indexOf("You are not authorized") != -1 ){
+					errorCode = 2;
+					return null;
+				}
 				publishProgress();
 				
 				if (!parseAndCreateGradesXML(html)){
@@ -555,6 +556,10 @@ public class Dionysos extends Activity {
 				publishProgress();
 				
 				html = downloadURL(LESSONS_URL);
+				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1 || html.indexOf("You are not authorized") != -1 ){
+					errorCode = 2;
+					return null;
+				}
 				publishProgress();
 				
 				if (!parseAndCreateLessonsXML(html)){
@@ -564,6 +569,10 @@ public class Dionysos extends Activity {
 				publishProgress();
 
 				html = downloadURL(REQUESTS_URL);
+				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1 || html.indexOf("You are not authorized") != -1 ){
+					errorCode = 2;
+					return null;
+				}
 				publishProgress();
 				
 				if (!parseAndCreateRequestsXML(html)){
