@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	android:background="#FFFFFF">
+	android:background="@color/activity_bg">
 
 	<TextView
 		android:id="@+id/welcome_message"
@@ -12,7 +12,7 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:text="@string/welcome_message"
-		android:textColor="#000000"
+		android:textColor="@color/text_color"
 		android:gravity="center"
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
@@ -26,7 +26,7 @@
 		android:paddingRight="15dp"
 		android:paddingBottom="15dp">
 		<RelativeLayout
-			android:id="@+id/rates_button"
+			android:id="@+id/grades_button"
 			android:layout_height="fill_parent"
 			android:background="@drawable/main_menu_button"
 			android:layout_width="fill_parent"
@@ -34,7 +34,7 @@
 			android:clickable="true"
 			android:layout_weight="1">
 			<TextView
-				android:id="@+id/rates_text"
+				android:id="@+id/grades_text"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceLarge"
@@ -42,16 +42,16 @@
 				android:textColor="#000000"
 				android:layout_alignParentLeft="true"
 				android:layout_centerVertical="true"
-				android:paddingLeft="15dp"></TextView>
+				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
 				android:id="@+id/imageView1"
-				android:background="@drawable/main_menu_button_image"
-				android:src="@drawable/rates"
+				android:src="@drawable/grades"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"></ImageView>
+				android:layout_marginRight="10dp"
+				></ImageView>
 		</RelativeLayout>
 		<RelativeLayout
 			android:id="@+id/lessons_button"
@@ -70,16 +70,16 @@
 				android:textColor="#000000"
 				android:layout_alignParentLeft="true"
 				android:layout_centerVertical="true"
-				android:paddingLeft="15dp"></TextView>
+				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
 				android:id="@+id/imageView1"
-				android:background="@drawable/main_menu_button_image"
 				android:src="@drawable/lessons"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"></ImageView>
+				android:layout_marginRight="10dp"
+				></ImageView>
 		</RelativeLayout>
 		<RelativeLayout
 			android:id="@+id/requests_button"
@@ -98,16 +98,16 @@
 				android:textColor="#000000"
 				android:layout_alignParentLeft="true"
 				android:layout_centerVertical="true"
-				android:paddingLeft="15dp"></TextView>
+				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
 				android:id="@+id/imageView1"
-				android:background="@drawable/main_menu_button_image"
 				android:src="@drawable/requests"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"></ImageView>
+				android:layout_marginRight="10dp"
+				></ImageView>
 		</RelativeLayout>
 		<RelativeLayout
 			android:id="@+id/preferences_button"
@@ -126,16 +126,17 @@
 				android:textColor="#000000"
 				android:layout_alignParentLeft="true"
 				android:layout_centerVertical="true"
-				android:paddingLeft="15dp"></TextView>
+				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
 				android:id="@+id/imageView1"
-				android:background="@drawable/main_menu_button_image"
 				android:src="@drawable/preferences"
+				android:padding="5dp"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"></ImageView>
+				android:layout_marginRight="5dp"
+			></ImageView>
 		</RelativeLayout>
 	</LinearLayout>
 </LinearLayout>
