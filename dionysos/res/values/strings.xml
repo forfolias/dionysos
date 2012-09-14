@@ -3,7 +3,7 @@
     <string name="appName">Ηλεκτρονική Γραμματεία</string>
     <string name="welcome_message">Καλως ορίσατε στην Ηλεκτρονική Γραμματεία του ΤΕΙ Λάρισας</string>
     <string name="my_requests">Οι αιτήσεις μου</string>
-    <string name="lessons">Η Δήλωσή μου</string>
+    <string name="lessons">Η δήλωσή μου</string>
     <string name="preferences">Ρυθμίσεις</string>
     <string name="user_credentials">Στοιχεία εισόδου</string>
     <string name="username_dialog_message">Παρακαλώ εισάγετε το όνομα χρήστη</string>
@@ -50,8 +50,8 @@
     <string name="date">Ημερομηνία</string>
     <string name="counter">A/A</string>
     <string name="request_title">Τίτλος αίτησης</string>
-    <color name="row_odd">#164450</color>
-    <color name="row_even">#216778</color>
+    <color name="row_odd">#8A9C99</color>
+    <color name="row_even">#475653</color>
     <color name="row_header">#454545</color>
     <string name="semester">Εξάμηνο</string>
     <string name="hours">ώρες</string>
@@ -59,4 +59,6 @@
     <string name="not_found">Δε βρέθηκε</string>
     <string name="file_error">Το αρχείο με τα δεδομένα δε βρέθηκε ή είναι κατεστραμμένο.</string>
     <string name="display_old_data">Εμφανίζοντα τα πιο πρόσφατα αποθηκευμένα δεδομένα</string>
+    <color name="activity_bg">#6F918A</color>
+    <color name="text_color">#D2D2D2</color>
 </resources>
