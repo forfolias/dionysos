@@ -21,13 +21,13 @@ public class MainScreen extends Activity {
 //		myFile.delete();
 //		myFile = new File("/sdcard/egrammatia/requests.xml");
 //		myFile.delete();
-
-		findViewById(R.id.preferences_button).setOnClickListener(
+		
+		findViewById(R.id.grades_button).setOnClickListener(
 				new OnClickListener() {
 					public void onClick(View v) {
 						Intent i = new Intent(
 								getBaseContext(),
-								gr.teilar.dionysos.PreferencesScreen.class);
+								gr.teilar.dionysos.GradesScreen.class);
 						startActivity(i);
 					}
 				});
@@ -46,6 +46,15 @@ public class MainScreen extends Activity {
 						Intent i = new Intent(
 								getBaseContext(),
 								gr.teilar.dionysos.RequestsScreen.class);
+						startActivity(i);
+					}
+				});
+		findViewById(R.id.preferences_button).setOnClickListener(
+				new OnClickListener() {
+					public void onClick(View v) {
+						Intent i = new Intent(
+								getBaseContext(),
+								gr.teilar.dionysos.PreferencesScreen.class);
 						startActivity(i);
 					}
 				});
