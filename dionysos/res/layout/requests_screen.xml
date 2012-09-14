@@ -4,7 +4,7 @@
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="#6F918A">
+	android:background="@color/activity_bg">
 	<TextView
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
 		android:layout_width="wrap_content"
 		android:text="@string/data_date"
 		android:id="@+id/requests_data_date"
-		android:textColor="#333333"
+		android:textColor="@color/text_color"
 		android:layout_below="@+id/textView1"
 		android:layout_centerHorizontal="true"></TextView>
 	<ScrollView
