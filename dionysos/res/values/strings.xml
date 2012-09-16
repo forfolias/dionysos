@@ -37,7 +37,7 @@
     <string name="connection_check">Έλεγχος σύνδεσης δεδομένων</string>
     <string name="data">Δεδομένα</string>
     <string name="last_data_download">Τελευταίες ενημερώσεις δεδομένων</string>
-    <string name="loading">Φορτώνει...</string>
+    <string name="loading">Φορτώνει…</string>
     <string name="grades">Βαθμολογίες</string>
     <string name="requests">Αιτήσεις</string>
     <string name="update_data_dialog_message">Ανανέωση των δεδομένων αν είναι παλαιότερα από τα λεπτά παρακάτω : </string>
@@ -50,8 +50,8 @@
     <string name="date">Ημερομηνία</string>
     <string name="counter">A/A</string>
     <string name="request_title">Τίτλος αίτησης</string>
-    <color name="row_odd">#8A9C99</color>
-    <color name="row_even">#475653</color>
+    <color name="row_odd">#CCCC99</color>
+    <color name="row_even">#CECEB0</color>
     <color name="row_header">#454545</color>
     <string name="semester">Εξάμηνο</string>
     <string name="hours">ώρες</string>
@@ -59,6 +59,6 @@
     <string name="not_found">Δε βρέθηκε</string>
     <string name="file_error">Το αρχείο με τα δεδομένα δε βρέθηκε ή είναι κατεστραμμένο.</string>
     <string name="display_old_data">Εμφανίζοντα τα πιο πρόσφατα αποθηκευμένα δεδομένα</string>
-    <color name="activity_bg">#6F918A</color>
-    <color name="text_color">#D2D2D2</color>
+    <color name="activity_bg">#E5E5C7</color>
+    <color name="text_color">#2D2D2D</color>
 </resources>
