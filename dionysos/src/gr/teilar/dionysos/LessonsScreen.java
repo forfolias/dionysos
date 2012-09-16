@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -49,7 +50,7 @@ public class LessonsScreen extends Activity {
 	}
 
 	protected void displayXml() {
-		File file = new File("/sdcard/egrammatia/lessons.xml");
+		File file = new File(Environment.getExternalStorageDirectory().getPath()+"/egrammatia/lessons.xml");
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db;
@@ -101,6 +102,7 @@ public class LessonsScreen extends Activity {
 			titleLine.setText(lessonssList.item(i).getChildNodes().item(0).getNodeValue());
 			titleLine.setTypeface(null, Typeface.BOLD);
 			titleLine.setTextSize(14);
+			titleLine.setTextColor(getResources().getColor(R.color.text_color));
 			
 			subtitleLine.setText(
 					getResources().getString(R.string.semester) + ": " + eksamino + " // " +
@@ -108,6 +110,7 @@ public class LessonsScreen extends Activity {
 					getResources().getString(R.string.ects) + " : " + dm
 					);
 			subtitleLine.setTextSize(11);
+			subtitleLine.setTextColor(getResources().getColor(R.color.text_color));
 			
 			layout.addView(titleLine, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 			layout.addView(subtitleLine, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
