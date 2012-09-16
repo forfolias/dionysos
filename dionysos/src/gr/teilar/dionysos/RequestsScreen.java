@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -49,7 +50,7 @@ public class RequestsScreen extends Activity {
 	}
 
 	protected void displayXml() {
-		File file = new File("/sdcard/egrammatia/requests.xml");
+		File file = new File(Environment.getExternalStorageDirectory().getPath()+"/egrammatia/requests.xml");
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db;
@@ -100,9 +101,11 @@ public class RequestsScreen extends Activity {
 			titleLine.setText(requestsList.item(i).getChildNodes().item(0).getNodeValue());
 			titleLine.setTypeface(null, Typeface.BOLD);
 			titleLine.setTextSize(14);
+			titleLine.setTextColor(getResources().getColor(R.color.text_color));
 			
 			subtitleLine.setText(getResources().getString(R.string.date) + " : " + reqDateString.substring(0, reqDateString.indexOf(" ")));
 			subtitleLine.setTextSize(11);
+			subtitleLine.setTextColor(getResources().getColor(R.color.text_color));
 			
 			layout.addView(titleLine, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 			layout.addView(subtitleLine, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
