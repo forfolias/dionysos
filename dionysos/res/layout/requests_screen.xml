@@ -32,7 +32,7 @@
 		<LinearLayout
 			android:id="@+id/linearLayout1"
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+			android:layout_height="wrap_content">
 			<TableLayout
 				android:paddingTop="10dp"
 				android:paddingLeft="5dp"
@@ -40,8 +40,7 @@
 				android:layout_height="wrap_content"
 				android:layout_width="fill_parent"
 				android:id="@+id/tableRequests"
-				android:layout_below="@+id/requests_data_date"
-				android:layout_centerHorizontal="true">
+				>
 			</TableLayout>
 		</LinearLayout>
 	</ScrollView>

@@ -14,8 +14,6 @@
 		android:text="@string/welcome_message"
 		android:textColor="@color/text_color"
 		android:gravity="center"
-		android:layout_alignParentLeft="true"
-		android:layout_centerVertical="true"
 		android:layout_margin="15dp"></TextView>
 
 	<LinearLayout
@@ -47,6 +45,7 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/imageView1"
 				android:src="@drawable/grades"
+				android:contentDescription="@string/grades"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
@@ -73,7 +72,8 @@
 				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
-				android:id="@+id/imageView1"
+				android:id="@+id/imageView2"
+				android:contentDescription="@string/lessons"
 				android:src="@drawable/lessons"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
@@ -101,7 +101,8 @@
 				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
-				android:id="@+id/imageView1"
+				android:id="@+id/imageView3"
+				android:contentDescription="@string/requests"
 				android:src="@drawable/requests"
 				android:layout_width="wrap_content"
 				android:layout_centerVertical="true"
@@ -129,7 +130,8 @@
 				android:paddingLeft="10dp"></TextView>
 			<ImageView
 				android:layout_height="wrap_content"
-				android:id="@+id/imageView1"
+				android:id="@+id/imageView4"
+				android:contentDescription="@string/preferences"
 				android:src="@drawable/preferences"
 				android:padding="5dp"
 				android:layout_width="wrap_content"
