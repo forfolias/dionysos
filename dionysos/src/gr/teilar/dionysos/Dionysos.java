@@ -391,6 +391,23 @@ public class Dionysos extends Activity {
 			return true;
 		return false;
 	}
+	
+	public static int checkHtml(String html){
+		if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1
+				|| html.indexOf("You are not authorized") != -1) {
+			return 2;
+		}
+		if (html.indexOf("Λάθος όνομα χρήστη") != -1) {
+			return 11;
+		}
+		if (html.indexOf("Λάθος κωδικός πρόσβασης") != -1) {
+			return 12;
+		}
+		if (html.indexOf("Είσοδος Φοιτητή") != -1) {
+			return 13;
+		}
+		return 0;
+	}
 
 	final class DownloadData extends AsyncTask<Void, Integer, Void> {
 		private final int titles[] = { R.string.connection_check,
@@ -407,7 +424,10 @@ public class Dionysos extends Activity {
 				R.string.downloading_lessons_error,
 				R.string.writing_lessons_error,
 				R.string.downloading_requests_error,
-				R.string.writing_requests_error };
+				R.string.writing_requests_error,
+				R.string.login_fail_username,
+				R.string.login_fail_password,
+				R.string.login_fail};
 
 		private final int progr[] = { 2, 20, 18, 8, 18, 8, 18, 8 };
 
@@ -473,12 +493,8 @@ public class Dionysos extends Activity {
 			if (url != null) { /* Download specific url */
 
 				html = downloadURL(url);
-
-				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1
-						|| html.indexOf("You are not authorized") != -1) {
-					errorCode = 2;
-					return null;
-				}
+				errorCode = checkHtml(html);
+				if (errorCode != 0) return null;
 
 				if (url == GRADES_URL) {
 					publishProgress();
@@ -505,12 +521,9 @@ public class Dionysos extends Activity {
 			} else { /* Download all urls */
 
 				html = downloadURL(GRADES_URL);
-
-				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1
-						|| html.indexOf("You are not authorized") != -1) {
-					errorCode = 2;
-					return null;
-				}
+				errorCode = checkHtml(html);
+				if (errorCode != 0) return null;
+				
 				publishProgress();
 
 				if (!parseAndCreateGradesXML(html)) {
@@ -520,11 +533,9 @@ public class Dionysos extends Activity {
 				publishProgress();
 
 				html = downloadURL(LESSONS_URL);
-				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1
-						|| html.indexOf("You are not authorized") != -1) {
-					errorCode = 2;
-					return null;
-				}
+				errorCode = checkHtml(html);
+				if (errorCode != 0) return null;
+				
 				publishProgress();
 
 				if (!parseAndCreateLessonsXML(html)) {
@@ -534,11 +545,14 @@ public class Dionysos extends Activity {
 				publishProgress();
 
 				html = downloadURL(REQUESTS_URL);
-				if (html.equals("") || html.indexOf("Συνέβη σφάλμα") != -1
-						|| html.indexOf("You are not authorized") != -1) {
-					errorCode = 2;
-					return null;
-				}
+
+				
+				
+				
+				
+				errorCode = checkHtml(html);
+				if (errorCode != 0) return null;
+
 				publishProgress();
 
 				if (!parseAndCreateRequestsXML(html)) {
