@@ -61,4 +61,7 @@
     <string name="display_old_data">Εμφανίζοντα τα πιο πρόσφατα αποθηκευμένα δεδομένα</string>
     <color name="activity_bg">#E5E5C7</color>
     <color name="text_color">#2D2D2D</color>
+    <string name="login_fail_username">Λάθος όνομα χρήστη</string>
+    <string name="login_fail_password">Λάθος κωδικός πρόσβασης</string>
+    <string name="login_fail">Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης</string>
 </resources>
