@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="gr.teilar.dionysos"
+	android:versionCode="1"
+	android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="7" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<application
+		android:icon="@drawable/icon"
+		android:label="@string/appName">
+		<activity
+			android:name=".SplashScreen"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".MainScreen"
+			android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
+		<activity
+			android:name=".PreferencesScreen"
+			android:label="@string/preferences" />
+		<activity
+			android:name="Dionysos"
+			android:label="@string/downloading_data"
+			android:theme="@android:style/Theme.Dialog"
+			android:noHistory="true" />
+		<activity
+			android:name=".AboutAppScreen"
+			android:label="@string/appName"
+			android:theme="@android:style/Theme.Dialog" />
+		<activity
+			android:name=".AboutDataScreen"
+			android:label="@string/data_information"
+			android:theme="@android:style/Theme.Dialog" />
+		<activity
+			android:name=".GradesScreen"
+			android:label="@string/grades"
+			android:theme="@android:style/Theme.NoTitleBar" />
+		<activity
+			android:name=".LessonsScreen"
+			android:label="@string/lessons" 
+			android:theme="@android:style/Theme.NoTitleBar" />
+		<activity
+			android:name=".RequestsScreen"
+			android:label="@string/requests"
+			android:theme="@android:style/Theme.NoTitleBar" />
+	</application>
+</manifest>
