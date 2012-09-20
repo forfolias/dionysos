@@ -1,7 +1,9 @@
 package gr.teilar.dionysos;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
@@ -11,6 +13,11 @@ public class PreferencesScreen extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_screen);
+		
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		if (prefs.getString("username", "").equals("") || prefs.getString("password", "").equals(""))
+			((Preference) findPreference("updatePreference")).setEnabled(false);
 		
 		Preference aboutPref = (Preference) findPreference("aboutPreference");
 		aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
