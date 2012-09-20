@@ -385,9 +385,9 @@ public class Dionysos extends Activity {
 		} catch (ParseException e) {
 			return true;
 		}
-		long now = new Date().getTime();
-		long minDiff = ((now - reqDate.getTime()) / 60000);
-
+		long now = (long) new Date().getTime();
+		long minDiff = (long) ((now - reqDate.getTime()) / 60000);
+		
 		if (minDiff > minutes)
 			return true;
 		return false;
