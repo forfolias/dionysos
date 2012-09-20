@@ -65,5 +65,5 @@
     <string name="login_fail_password">Λάθος κωδικός πρόσβασης</string>
     <string name="login_fail">Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης</string>
     <string name="about_app_text"></string>
-    <string name="version">Έκδοση: 1.0</string>
+    <string name="version">Έκδοση: </string>
 </resources>
