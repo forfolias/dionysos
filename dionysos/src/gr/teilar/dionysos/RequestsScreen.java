@@ -45,6 +45,7 @@ public class RequestsScreen extends Activity {
 			startActivityForResult(i, 1);
 		}
 		else {
+			((TextView) findViewById(R.id.requests_data_date)).setText(getResources().getString(R.string.display_old_data));
 			displayXml();
 		}
 	}

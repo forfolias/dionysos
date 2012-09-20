@@ -45,6 +45,7 @@ public class LessonsScreen extends Activity {
 			startActivityForResult(i, 1);
 		}
 		else {
+			((TextView) findViewById(R.id.lessons_data_date)).setText(getResources().getString(R.string.display_old_data));
 			displayXml();
 		}
 	}

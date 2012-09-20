@@ -53,6 +53,7 @@ public class GradesScreen extends Activity {
 			startActivityForResult(i, 1);
 		}
 		else {
+			((TextView) findViewById(R.id.grades_data_date)).setText(getResources().getString(R.string.display_old_data));
 			displayXml();
 		}
 	}
