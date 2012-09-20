@@ -385,7 +385,8 @@ public class Dionysos extends Activity {
 		} catch (ParseException e) {
 			return true;
 		}
-		long minDiff = ((new Date().getTime() - reqDate.getTime()) / 60000);
+		long now = new Date().getTime();
+		long minDiff = ((now - reqDate.getTime()) / 60000);
 
 		if (minDiff > minutes)
 			return true;
@@ -406,7 +407,7 @@ public class Dionysos extends Activity {
 		if (html.indexOf("Είσοδος Φοιτητή") != -1) {
 			return 13;
 		}
-		return 0;
+		return -1;
 	}
 
 	final class DownloadData extends AsyncTask<Void, Integer, Void> {
@@ -494,7 +495,7 @@ public class Dionysos extends Activity {
 
 				html = downloadURL(url);
 				errorCode = checkHtml(html);
-				if (errorCode != 0) return null;
+				if (errorCode != -1) return null;
 
 				if (url == GRADES_URL) {
 					publishProgress();
@@ -522,7 +523,7 @@ public class Dionysos extends Activity {
 
 				html = downloadURL(GRADES_URL);
 				errorCode = checkHtml(html);
-				if (errorCode != 0) return null;
+				if (errorCode != -1) return null;
 				
 				publishProgress();
 
@@ -534,7 +535,7 @@ public class Dionysos extends Activity {
 
 				html = downloadURL(LESSONS_URL);
 				errorCode = checkHtml(html);
-				if (errorCode != 0) return null;
+				if (errorCode != -1) return null;
 				
 				publishProgress();
 
@@ -545,13 +546,8 @@ public class Dionysos extends Activity {
 				publishProgress();
 
 				html = downloadURL(REQUESTS_URL);
-
-				
-				
-				
-				
 				errorCode = checkHtml(html);
-				if (errorCode != 0) return null;
+				if (errorCode != -1) return null;
 
 				publishProgress();
 
