@@ -59,20 +59,6 @@ public class GradesScreen extends Activity {
 
 	protected void displayXml() {
 		TextView dataDate = (TextView) findViewById(R.id.grades_data_date);
-//		dataDate.setText("TATAN");
-		
-//		for (int j = 0; j < eksamina; j++){
-//			eksaminaTable[j] = new TableLayout(this);
-//			TextView tv = new TextView(cxt);
-//			tv.setText("Bonjour PAUG " + j);
-//			tv.setTextColor(Color.WHITE);
-//			tv.setTextSize(30);
-//			eksaminaTable[j].addView(tv);
-//		}
-		
-//		myPagerAdapter awesomeAdapter = new myPagerAdapter();
-//		ViewPager awesomePager = (ViewPager) findViewById(R.id.awesomepager);
-//		awesomePager.setAdapter(awesomeAdapter);
 				
 		File file = new File(Environment.getExternalStorageDirectory().getPath()+"/egrammatia/grades.xml");
 
@@ -97,7 +83,6 @@ public class GradesScreen extends Activity {
 		String date = ((Element) doc.getElementsByTagName("grades").item(0))
 				.getAttribute("date");
 
-//		TextView dataDate = (TextView) findViewById(R.id.grades_data_date);
 		dataDate.setText(dataDate.getText() + " " + date);
 		
 		NodeList eksaminaList = doc.getElementsByTagName("eksamino");
@@ -171,8 +156,10 @@ public class GradesScreen extends Activity {
 				
 				vathmos.setText(((Element) mathimata.item(i)).getAttribute("vathmos"));
 				vathmos.setTypeface(null, Typeface.BOLD);
-				vathmos.setTextSize(15);
+				vathmos.setTextSize(17);
+				vathmos.setPadding(5, 5, 10, 0);
 				vathmos.setTextColor(getResources().getColor(R.color.text_color));
+				vathmos.setId((30*(j+1))+i);
 				
 				title.setText(mathimata.item(i).getChildNodes().item(0).getNodeValue());
 				title.setTypeface(null, Typeface.BOLD);
@@ -188,8 +175,16 @@ public class GradesScreen extends Activity {
 				subtitleLine.setTextColor(getResources().getColor(R.color.text_color));
 				
 				align = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+				align.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+				align.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+				align.addRule(RelativeLayout.CENTER_VERTICAL);
+				mathimaLine.addView(vathmos, align);
+				
+				
+				align = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 				align.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 				align.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+				align.addRule(RelativeLayout.LEFT_OF, vathmos.getId());
 				mathimaLine.addView(title, align);
 				
 				align = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -197,10 +192,6 @@ public class GradesScreen extends Activity {
 				align.addRule(RelativeLayout.BELOW, title.getId());
 				mathimaLine.addView(subtitleLine, align);
 				
-				align = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-				align.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-				align.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-				mathimaLine.addView(vathmos, align);
 				
 				mathimaLine.setPadding(7, 7, 7, 7);
 				
