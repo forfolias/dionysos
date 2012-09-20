@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appName">Ηλεκτρονική Γραμματεία</string>
+    <string name="app_name">Ηλεκτρονική Γραμματεία</string>
     <string name="welcome_message">Καλως ορίσατε στην Ηλεκτρονική Γραμματεία του ΤΕΙ Λάρισας</string>
     <string name="my_requests">Οι αιτήσεις μου</string>
     <string name="lessons">Η δήλωσή μου</string>
@@ -10,10 +10,10 @@
     <string name="username">Όνομα χρήστη</string>
     <string name="password_dialog_message">Παρακαλώ εισάγετε τον κωδικό σας</string>
     <string name="password">Κωδικός χρήστη</string>
-    <string name="aboutApp">Περί της εφαρμογής</string>
+    <string name="about_app">Περί της εφαρμογής</string>
     <string name="dionysos_error">Ο server της υπηρεσίας dionysos δεν επέστρεψε τα αναμενόμενα αποτελέσματα.</string>
-    <string name="missingUsername">Παρακαλώ συμπληρώστε το όνομα χρήστη στις ρυθμίσεις της εφαρμογής</string>
-    <string name="missingPassword">Παρακαλώ συμπληρώστε τον κωδικό του χρήστη στις ρυθμίσεις της εφαρμογής</string>
+    <string name="missing_username">Παρακαλώ συμπληρώστε το όνομα χρήστη στις ρυθμίσεις της εφαρμογής</string>
+    <string name="missing_password">Παρακαλώ συμπληρώστε τον κωδικό του χρήστη στις ρυθμίσεις της εφαρμογής</string>
     <string name="downloading_data">Κατέβασμα δεδομένων</string>
     <string name="downloading_grades">Κατέβασμα μαθημάτων και βαθμολογιών</string>
     <string name="writing_grades">Εγγραφή μαθημάτων και βαθμολογιών στην sdcard</string>
@@ -64,4 +64,6 @@
     <string name="login_fail_username">Λάθος όνομα χρήστη</string>
     <string name="login_fail_password">Λάθος κωδικός πρόσβασης</string>
     <string name="login_fail">Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης</string>
+    <string name="about_app_text"></string>
+    <string name="version">Έκδοση: 1.0</string>
 </resources>

@@ -26,9 +26,9 @@
 			android:key="dataInformationPreference"
 			android:title="@string/data_information" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/aboutApp">
+	<PreferenceCategory android:title="@string/about_app">
 		<Preference
 			android:key="aboutPreference"
-			android:title="@string/aboutApp" />
+			android:title="@string/about_app" />
 	</PreferenceCategory>
 </PreferenceScreen>

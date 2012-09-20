@@ -419,7 +419,7 @@ public class Dionysos extends Activity {
 
 		private final int errors[] = { R.string.connection_error,
 				R.string.connecting_error, R.string.dionysos_error,
-				R.string.missingUsername, R.string.missingPassword,
+				R.string.missing_username, R.string.missing_password,
 				R.string.downloading_grades_error,
 				R.string.writing_grades_error,
 				R.string.downloading_lessons_error,

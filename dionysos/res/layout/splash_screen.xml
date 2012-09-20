@@ -11,7 +11,7 @@
 		android:id="@+id/splashScreen"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:contentDescription="@string/appName"
+		android:contentDescription="@string/app_name"
 		android:src="@drawable/logo" />
 
 </LinearLayout>
